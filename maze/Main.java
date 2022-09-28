@@ -10,7 +10,7 @@ class tests{
 		// // Cell c = grid.check_and_getCell(0,2);
 		// Sidewinder.buildMaze(grid);
 		// grid.displayGrid();
-		Grid grid = new DistanceGrid(rows, cols);
+		Grid grid = new Grid(rows, cols);
 		Wilson.buildMaze(grid);
 		grid.displayGrid();
 		grid.braid();
