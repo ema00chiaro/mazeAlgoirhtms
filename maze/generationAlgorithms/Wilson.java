@@ -1,9 +1,12 @@
-package maze;
+package maze.generationAlgorithms;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+
+import maze.Cell;
+import maze.Grid;
 
 public class Wilson{
 

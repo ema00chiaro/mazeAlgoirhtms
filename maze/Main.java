@@ -1,4 +1,7 @@
 package maze;
+
+import maze.generationAlgorithms.*;
+
 class tests{
 	public static void main (String[] args) {
 		int rows = 7;
@@ -8,7 +11,7 @@ class tests{
 		// Sidewinder.buildMaze(grid);
 		// grid.displayGrid();
 		Grid grid = new DistanceGrid(rows, cols);
-		HuntAndKill.buildMaze(grid);
+		Wilson.buildMaze(grid);
 		grid.displayGrid();
 		grid.braid();
 		Cell start = grid.getCellAt(0, 0);

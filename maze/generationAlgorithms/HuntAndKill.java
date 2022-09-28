@@ -1,7 +1,11 @@
-package maze;
+package maze.generationAlgorithms;
 
 import java.util.List;
 import java.util.Objects;
+
+import maze.Cell;
+import maze.Grid;
+import maze.Utility;
 
 public class HuntAndKill {
 	public static void buildMaze(Grid grid){

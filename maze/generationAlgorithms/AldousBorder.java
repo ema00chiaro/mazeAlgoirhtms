@@ -1,4 +1,7 @@
-package maze;
+package maze.generationAlgorithms;
+
+import maze.Cell;
+import maze.Grid;
 
 public class AldousBorder {
 
