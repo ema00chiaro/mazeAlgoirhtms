@@ -10,7 +10,6 @@ public class Grid implements Iterable<Cell>{
 
 	private int rows, cols;
 	private Cell[][] grid;
-	public static final String ANSI_RED = "\u001B[31m";
 	public static final String ANSI_RESET = "\u001B[0m";
 	public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
 
@@ -57,7 +56,6 @@ public class Grid implements Iterable<Cell>{
 			return grid[i][j];
 		else
 			return null;
-			//throw new RuntimeException("Cella in posizione " + i +"-"+ j + "non trovata");
 	}
 
 	public int getRows() {
