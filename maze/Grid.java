@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class Grid implements Iterable<Cell>{
@@ -125,9 +124,9 @@ public class Grid implements Iterable<Cell>{
 		displayGrid(f);
 	}
 
-	private Function<Cell,String> setPathContent(){
+	// private Function<Cell,String> setPathContent(){
 		
-	}
+	// }
 
 	public Cell[][] getGrid(){
 		return grid;
