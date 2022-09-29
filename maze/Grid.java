@@ -173,7 +173,7 @@ public class Grid implements Iterable<Cell>{
 
 	public void braid(){
 		for (Cell cell : findDeadends()) {
-			if(cell.getLinks().size() == 1 && randomBoolean(2)){ //arrivati in un vicolo cieco aggiungiamo un ciclo al 50%
+			if(cell.getLinks().size() == 1 && Utility.randomBoolean(2)){ //arrivati in un vicolo cieco aggiungiamo un ciclo al 50%
 				List<Cell> neighbours = cell.getNeighbours();
 				neighbours.removeAll(cell.getLinks());
 
@@ -186,11 +186,6 @@ public class Grid implements Iterable<Cell>{
 				cell.link(neighbour);
 			}
 		}
-	}
-
-	//questa funzione ritorna true con probabilità 1/p
-	private boolean randomBoolean(int p) {
-		return new Random().nextInt(p) == 0;
 	}
 	
 }
