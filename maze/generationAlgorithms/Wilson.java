@@ -3,10 +3,10 @@ package maze.generationAlgorithms;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 import maze.Cell;
 import maze.Grid;
+import maze.Utility;
 
 public class Wilson{
 
@@ -16,11 +16,11 @@ public class Wilson{
 			unvisited.add(cell);
 		}
 
-		Cell first = getRandomArrayItem(unvisited);
+		Cell first = Utility.getRandomElement(unvisited);
 		unvisited.remove(first);
 
 		while (!unvisited.isEmpty()){
-			Cell cell = getRandomArrayItem(unvisited);
+			Cell cell = Utility.getRandomElement(unvisited);
 			List<Cell> path = new LinkedList<>();
 			path.add(cell);
 
@@ -45,10 +45,4 @@ public class Wilson{
 		}
 
 	}
-
-	private static Cell getRandomArrayItem(List<Cell> unvisited) {
-		int r = new Random().nextInt(unvisited.size());
-		return unvisited.get(r);
-	}
-
 }
