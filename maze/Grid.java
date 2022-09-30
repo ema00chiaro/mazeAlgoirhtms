@@ -122,10 +122,6 @@ public class Grid implements Iterable<Cell>{
 		displayGrid(f);
 	}
 
-	// private Function<Cell,String> setPathContent(){
-		
-	// }
-
 	public Cell[][] getGrid(){
 		return grid;
 	}
