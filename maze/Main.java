@@ -4,13 +4,14 @@ import maze.generationAlgorithms.*;
 
 class tests{
 	public static void main (String[] args) {
-		int rows = 15;
-		int cols = 15;
+		int rows = 3;
+		int cols = 3;
 		// Grid grid = new Grid(rows,cols);
 		// // Cell c = grid.check_and_getCell(0,2);
 		// Sidewinder.buildMaze(grid);
 		// grid.displayGrid();
-		Grid grid = new Grid(rows, cols);
+		//Grid grid = new Grid(rows, cols);
+		Grid grid = new WeightedGrid(rows, cols);
 		PrimSimplified.buildMaze(grid);
 		//grid.displayGrid();
 		//grid.braid();
