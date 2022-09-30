@@ -18,7 +18,7 @@ class tests{
 		grid.braid();
 		Cell start = grid.getCellAt(0, 0);
 		Cell target = grid.getCellAt(rows-1, cols-1);
-
+		System.out.println("ciao");
 		grid.displayGrid();
 		grid.displayDistances(start);
 		grid.displayDistanceBetween(start, target);
