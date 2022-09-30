@@ -132,4 +132,8 @@ public class Cell {
 	public void setWest(Cell west) {
 		this.west = west;
 	}
+
+	protected int getWeight(){
+		return 1;
+	}
 }
