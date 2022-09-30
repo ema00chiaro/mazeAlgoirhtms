@@ -13,18 +13,18 @@ public class Grid implements Iterable<Cell>{
 	public static final String ANSI_RESET = "\u001B[0m";
 	public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
 
-	public Grid(int rows, int cols, CellFactory<? extends Cell> cf) {
+	public Grid(int rows, int cols) {
 		this.rows = rows;
 		this.cols = cols;
-		grid = cf.getGrid(rows, cols);
-		prepareGrid(cf);
+		grid = new Cell[rows][cols];
+		prepareGrid();
 		configureCells();
 	}
 
-	public void prepareGrid(CellFactory<? extends Cell> cf){
+	protected void prepareGrid(){
 		for (int i = 0; i < rows; i++){
 			for (int j = 0; j < cols; j++){
-				grid[i][j] = cf.cellInstance(i, j);
+				grid[i][j] = new Cell(i, j);
 			}
 		}
 	}
