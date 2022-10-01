@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import maze.Cell;
 import maze.Grid;
 import maze.Utility;
+import maze.cells.Cell;
 
 public class PrimSimplified {
 

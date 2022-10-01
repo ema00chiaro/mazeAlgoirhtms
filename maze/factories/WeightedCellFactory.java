@@ -1,6 +1,9 @@
-package maze;
+package maze.factories;
 
 import java.util.Random;
+
+import maze.cells.Cell;
+import maze.cells.WeightedCell;
 
 public class WeightedCellFactory implements CellFactory{
 

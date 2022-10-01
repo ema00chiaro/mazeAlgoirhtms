@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
 
+import maze.cells.Cell;
+import maze.distances.Distances;
+import maze.factories.CellFactory;
+
 public class Grid implements Iterable<Cell>{
 
 	private int rows, cols;
@@ -93,13 +97,12 @@ public class Grid implements Iterable<Cell>{
 		}
 	}
 
-	public void displayDistances(Cell start){
-		Distances distances = start.distances();
+	public void displayDistances(Cell start, Distances distances){
 		displayGrid(c -> " " + Integer.toString(distances.distanceFromRoot(c), 36) + " ");
 	}
 	
-	public void displayDistanceBetween(Cell start, Cell target){
-		Distances distances = start.distances().pathTo(target);
+	public void displayDistanceBetween(Cell start, Cell target, Distances d){
+		Distances distances = d.pathTo(target);
 		Function<Cell, String> f = cell -> {
 			if (distances.contains(cell)){
 				return " " + Integer.toString(distances.distanceFromRoot(cell), 36) + " ";
@@ -110,8 +113,8 @@ public class Grid implements Iterable<Cell>{
 		displayGrid(f);
 	}
 
-	public void displayPathBetween(Cell start, Cell target){
-		Distances distances = start.distances().pathTo(target);
+	public void displayPathBetween(Cell start, Cell target, Distances d){
+		Distances distances = d.pathTo(target);
 		Function<Cell, String> f = cell -> {
 			if (distances.contains(cell)){
 				return ANSI_GREEN_BACKGROUND + "   " + ANSI_RESET;

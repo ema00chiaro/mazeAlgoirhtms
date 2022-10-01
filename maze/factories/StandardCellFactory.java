@@ -1,4 +1,6 @@
-package maze;
+package maze.factories;
+
+import maze.cells.Cell;
 
 public class StandardCellFactory implements CellFactory{
 

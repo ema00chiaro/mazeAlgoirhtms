@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import maze.Cell;
 import maze.Grid;
 import maze.Utility;
+import maze.cells.Cell;
 
 public class Wilson{
 
