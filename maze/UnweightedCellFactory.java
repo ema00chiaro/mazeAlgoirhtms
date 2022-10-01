@@ -1,14 +1,14 @@
 package maze;
 
-public class UnweightedCellFactory implements CellFactory<Cell>{
+public class UnweightedCellFactory implements CellFactory{
 
 	@Override
-	public Cell[][] getGrid(int rows, int cols) {
+	public Cell[][] createGrid(int rows, int cols) {
 		return new Cell[rows][cols];
 	}
 
 	@Override
-	public Cell cellInstance(int row, int col) {
+	public Cell createCell(int row, int col) {
 		return new Cell(row, col);
 	}
 }

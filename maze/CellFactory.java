@@ -1,6 +1,6 @@
 package maze;
 
-public interface CellFactory<T extends Cell> {
-	public T[][] getGrid(int rows, int cols);
-	public T cellInstance(int row, int col);
+public interface CellFactory {
+	public Cell[][] createGrid(int rows, int cols);
+	public Cell createCell(int row, int col);
 }

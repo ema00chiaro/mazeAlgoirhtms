@@ -2,7 +2,7 @@ package maze;
 
 import java.util.Random;
 
-public class WeightedCellFactory implements CellFactory<WeightedCell>{
+public class WeightedCellFactory implements CellFactory{
 
 	private int maxCellWeight;
 
@@ -11,12 +11,12 @@ public class WeightedCellFactory implements CellFactory<WeightedCell>{
 	}
 
 	@Override
-	public WeightedCell[][] getGrid(int rows, int cols) {
+	public Cell[][] createGrid(int rows, int cols) {
 		return new WeightedCell[rows][cols];
 	}
 
 	@Override
-	public WeightedCell cellInstance(int row, int col) {
+	public Cell createCell(int row, int col) {
 		return new WeightedCell(row, col, new Random().nextInt(maxCellWeight)+1);
 	}
 	
