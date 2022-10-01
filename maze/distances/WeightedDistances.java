@@ -15,7 +15,7 @@ public class WeightedDistances extends Distances {
 	@Override
 	public void distances(){
 
-		Queue<Cell> pending = new PriorityQueue<>((c1,c2) -> {
+		Queue<Cell> pending = new PriorityQueue<>((c1,c2) -> { //FIXME
 				int w1 = 1, w2 = 1;
 				if (c1 instanceof WeightedCell)
 					w1 = ((WeightedCell)c1).getWeight();
