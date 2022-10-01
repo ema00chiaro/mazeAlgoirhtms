@@ -44,6 +44,10 @@ public class WeightedCell extends Cell implements Comparable<Cell>{
 		return weight;
 	}
 
+	public void setWeight(int weight){
+		this.weight = weight;
+	}
+
 	@Override
 	public int compareTo(Cell o) {
 		if(o instanceof WeightedCell){
