@@ -3,8 +3,6 @@ package maze;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
-import java.util.Random;
 import java.util.Set;
 
 public class Cell {
@@ -32,31 +30,18 @@ public class Cell {
 	
 	//TODO
 	public Cell getRandomNeighbour(){
-		ArrayList<Cell> pool = new ArrayList<>();
-		if (!Objects.isNull(north))
-		pool.add(north);
-		if (!Objects.isNull(south))
-			pool.add(south);
-		if (!Objects.isNull(east))
-			pool.add(east);
-		if (!Objects.isNull(west))
-			pool.add(west);
-		int r = new Random().nextInt(pool.size());
-		return pool.get(r);
+		Set<Cell> pool = new HashSet<>();
+		pool.addAll(List.of(north, south, east, west));
+		pool.remove(null);
+		return Utility.getRandomElement(pool.stream().toList());
 	}
 
 	//TODO
 	public List<Cell> getNeighbours(){
-		List<Cell> l = new ArrayList<>();
-		if (!Objects.isNull(north))
-			l.add(north);
-		if (!Objects.isNull(south))
-			l.add(south);
-		if (!Objects.isNull(east))
-			l.add(east);
-		if (!Objects.isNull(west))
-		l.add(west);
-		return l;
+		Set<Cell> pool = new HashSet<>();
+		pool.addAll(List.of(north, south, east, west));
+		pool.remove(null);
+		return pool.stream().toList();
 	}
 
 	//Dijkstra semplificato - da usare quando tutti i pesi degli archi sono 1
@@ -131,9 +116,5 @@ public class Cell {
 
 	public void setWest(Cell west) {
 		this.west = west;
-	}
-
-	protected int getWeight(){
-		return 1;
 	}
 }
