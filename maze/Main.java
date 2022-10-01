@@ -1,9 +1,8 @@
 package maze;
 
 import maze.cells.Cell;
-import maze.distances.Distances;
-import maze.distances.WeightedDistances;
-import maze.factories.StandardCellFactory;
+import maze.distances.*;
+import maze.factories.*;
 import maze.generationAlgorithms.*;
 
 class tests{
@@ -12,7 +11,7 @@ class tests{
 		int cols = 7;
 
 		//Grid grid = new Grid(rows, cols, new WeightedCellFactory(20));
-		Grid grid = new Grid(rows, cols, new StandardCellFactory());
+		Grid grid = new Grid(rows, cols, new WeightedCellFactory(20));
 		PrimSimplified.buildMaze(grid);
 		grid.displayGrid();
 		grid.braid();

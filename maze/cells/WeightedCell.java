@@ -1,6 +1,6 @@
 package maze.cells;
 
-public class WeightedCell extends Cell implements Comparable<WeightedCell>{
+public class WeightedCell extends Cell implements Comparable<Cell>{
 
 	private int weight;
 
@@ -72,9 +72,9 @@ public class WeightedCell extends Cell implements Comparable<WeightedCell>{
 	}
 
 	@Override
-	public int compareTo(WeightedCell o) {
+	public int compareTo(Cell o) {
 		if(o instanceof WeightedCell){
-			return getWeight() - o.getWeight();
+			return getWeight() - ((WeightedCell)o).getWeight();
 		}else{
 			return getWeight() - 1;
 		}
