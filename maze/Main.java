@@ -12,7 +12,7 @@ class tests{
 		// grid.displayGrid();
 		//Grid grid = new Grid(rows, cols);
 		//Grid grid = new Grid(rows, cols, new WeightedCellFactory(20));
-		Grid grid = new Grid(rows, cols, new UnweightedCellFactory());
+		Grid grid = new Grid(rows, cols, new WeightedCellFactory(20));
 		PrimSimplified.buildMaze(grid);
 		grid.displayGrid();
 		grid.braid();

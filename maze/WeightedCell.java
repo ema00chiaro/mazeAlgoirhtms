@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class WeightedCell extends Cell{
+public class WeightedCell extends Cell implements Comparable<Cell>{
 
 	private int weight;
 
@@ -21,14 +21,15 @@ public class WeightedCell extends Cell{
 	@Override
 	public Distances distances(){
 		Distances weights = new Distances(this);
-		Set<Cell> pending = new HashSet<>();
+		Set<WeightedCell> pending = new HashSet<>();
 		pending.add(this);
 
 		while (!pending.isEmpty()){
-			Cell cell = Collections.min(pending, (c1,c2) -> c1.getWeight()-c2.getWeight());
+			Cell cell = Collections.min(pending);
 			pending.remove(cell);
 
-			for (Cell linked : cell.getLinks()) {
+			for (Cell c : cell.getLinks()) {
+				WeightedCell linked = (WeightedCell)c; //FIXME
 				int totalWeight = weights.distanceFromRoot(cell) + linked.getWeight();
 				if (!weights.contains(linked) || totalWeight < weights.distanceFromRoot(linked)){
 					pending.add(linked);
@@ -39,9 +40,17 @@ public class WeightedCell extends Cell{
 		return weights;
 	}
 
-	@Override
 	public int getWeight(){
 		return weight;
+	}
+
+	@Override
+	public int compareTo(Cell o) {
+		if(o instanceof WeightedCell){
+			return getWeight() - ((WeightedCell)o).getWeight();
+		}else{
+			return getWeight() - 1;
+		}
 	}
 
 }
