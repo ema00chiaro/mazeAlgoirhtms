@@ -1,11 +1,12 @@
 package maze;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Random;
 
 public class Utility {
-	public static <T> T getRandomElement(List<T> list){
-		return list.get(new Random().nextInt(list.size()));
+	public static <T> T getRandomElement(Collection<T> c){
+		return new ArrayList<>(c).get(new Random().nextInt(c.size()));
 	}
 
 	//questa funzione ritorna true con probabilità 1/p
