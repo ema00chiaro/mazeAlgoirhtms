@@ -17,25 +17,6 @@ public class WeightedCell extends Cell implements Comparable<Cell>{
 		this.weight = weight;
 	}
 
-	// public WeightedCell(Cell c){
-	// 	this(c.getRow(),c.getCol());
-	// 	weight = 1;
-	// 	links = c.links;
-	// 	north = c.north;
-	// 	south = c.south;
-	// 	east = c.east;
-	// 	west = c.west;
-	// }
-
-	// public WeightedCell(Cell c, int weight){
-	// 	this(c.getRow(),c.getCol(), weight);
-	// 	links = c.links;
-	// 	north = c.north;
-	// 	south = c.south;
-	// 	east = c.east;
-	// 	west = c.west;
-	// }
-
 	public int getWeight(){
 		return weight;
 	}
