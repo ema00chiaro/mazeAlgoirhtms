@@ -3,9 +3,9 @@ package maze.cells;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
-import java.util.Random;
 import java.util.Set;
+
+import maze.Utility;
 
 public class Cell{
 	private int row,col;
@@ -32,56 +32,26 @@ public class Cell{
 		return removed;
 	}
 	
-	//TODO
 	public Cell getRandomNeighbour(){
-		List<Cell> pool = new ArrayList<>();
-		if (!Objects.isNull(north))
+		Set<Cell> pool = new HashSet<>();
 		pool.add(north);
-		if (!Objects.isNull(south))
-			pool.add(south);
-		if (!Objects.isNull(east))
-			pool.add(east);
-		if (!Objects.isNull(west))
-			pool.add(west);
-		int r = new Random().nextInt(pool.size());
-		return pool.get(r);
+		pool.add(south);
+		pool.add(east);
+		pool.add(west);
+		pool.remove(null); //nel caso una cella non abbia alcuni vicini
+		return Utility.getRandomElement(pool);
+
 	}
 
-	//TODO
 	public List<Cell> getNeighbours(){
-		List<Cell> l = new ArrayList<>();
-		if (!Objects.isNull(north))
-			l.add(north);
-		if (!Objects.isNull(south))
-			l.add(south);
-		if (!Objects.isNull(east))
-			l.add(east);
-		if (!Objects.isNull(west))
-		l.add(west);
-		return l;
+		Set<Cell> pool = new HashSet<>();
+		pool.add(north);
+		pool.add(south);
+		pool.add(east);
+		pool.add(west);
+		pool.remove(null); //nel caso una cella non abbia alcuni vicini
+		return new ArrayList<>(pool);
 	}
-
-	// //Dijkstra semplificato - da usare quando tutti i pesi degli archi sono 1
-	// //verrà overridato in weighted cell
-	// public Distances distances(){
-	// 	Distances distances = new Distances(this);
-	// 	List<Cell> frontier = new ArrayList<>();
-	// 	frontier.add(this);
-
-	// 	while (!frontier.isEmpty()){
-	// 		List<Cell> frontier_new = new ArrayList<>(); 
-	// 		for (Cell cell : frontier) {
-	// 			for (Cell linked : cell.links) {
-	// 				if (!distances.contains(linked)){ // da rivedere
-	// 					distances.setCellDistance(linked, distances.distanceFromRoot(cell) + 1);
-	// 					frontier_new.add(linked);
-	// 				}
-	// 			}
-	// 		}
-	// 		frontier = frontier_new;
-	// 	}
-	// 	return distances;
-	// }
 
 	public boolean hasLinks(){
 		return !links.isEmpty();
