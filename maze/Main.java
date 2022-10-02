@@ -2,7 +2,7 @@ package maze;
 
 import maze.cells.Cell;
 import maze.cells.WeightedCell;
-import maze.factories.*;
+import maze.distances.Distances;
 import maze.generationAlgorithms.*;
 
 class tests{
@@ -11,7 +11,7 @@ class tests{
 		int cols = 4;
 
 		//Grid grid = new Grid(rows, cols, new WeightedCellFactory(20));
-		Grid grid = new Grid(rows, cols, new WeightedCellFactory(20));
+		Grid grid = new WeightedGrid(rows, cols);
 		PrimSimplified.buildMaze(grid);
 		grid.displayGrid();
 		grid.braid();
@@ -19,12 +19,15 @@ class tests{
 		Cell target = grid.getCellAt(rows-1, cols-1);
 
 		grid.displayGrid();
-		grid.displayDistances(start);
+		grid.setDistances(Distances.weightedDistances(start)); //TODO: mettere questa cosa dentro le varie classi grid
+		// grid.displayDistances(start);
+		grid.displayDistances();
 		grid.displayDistanceBetween(start, target);
 		grid.displayPathBetween(start, target);
-		((WeightedCell)grid.getCellAt(1,0)).setWeight(1000);
-		grid.displayDistances(start);
-		grid.displayPathBetween(start, target);
+		//((WeightedCell)grid.getCellAt(1,0)).setWeight(1000);
+		//grid.displayDistances(start);
+		//grid.displayDistances();
+		//grid.displayPathBetween(start, target);
 
 	}
 }

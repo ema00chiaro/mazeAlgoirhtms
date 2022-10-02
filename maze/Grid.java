@@ -8,27 +8,27 @@ import java.util.function.Function;
 
 import maze.cells.Cell;
 import maze.distances.Distances;
-import maze.factories.CellFactory;
 
 public class Grid implements Iterable<Cell>{
 
-	private int rows, cols;
-	private Cell[][] grid;
+	protected int rows, cols;
+	protected Cell[][] grid;
 	public static final String ANSI_RESET = "\u001B[0m";
 	public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
+	private Distances distances;
 
-	public Grid(int rows, int cols, CellFactory cf) {
+	public Grid(int rows, int cols) {
 		this.rows = rows;
 		this.cols = cols;
-		grid = cf.createGrid(rows, cols);
-		prepareGrid(cf);
+		grid = new Cell[rows][cols];
+		prepareGrid();
 		configureCells();
 	}
 
-	public void prepareGrid(CellFactory cf){
+	public void prepareGrid(){
 		for (int i = 0; i < rows; i++){
 			for (int j = 0; j < cols; j++){
-				grid[i][j] = cf.createCell(i, j);
+				grid[i][j] = new Cell(i, j);
 			}
 		}
 	}
@@ -97,15 +97,22 @@ public class Grid implements Iterable<Cell>{
 		}
 	}
 
-	public void displayDistances(Cell start){
-		Distances d = start.distances();
-		displayGrid(c -> " " + Integer.toString(d.distanceFromRoot(c), 36) + " ");
+	public void setDistances(Distances d){
+		this.distances = d;
+	}
+
+	// public void displayDistances(Cell start){
+	// 	displayGrid(c -> " " + Integer.toString(distances.distanceFromRoot(c), 36) + " ");
+	// }
+
+	public void displayDistances(){
+		displayGrid(c -> " " + Integer.toString(distances.distanceFromRoot(c), 36) + " ");
 	}
 	
 	public void displayDistanceBetween(Cell start, Cell target){
-		Distances distances = start.distances().pathTo(target);
+		Distances dist = distances.pathTo(target);
 		Function<Cell, String> f = cell -> {
-			if (distances.contains(cell)){
+			if (dist.contains(cell)){
 				return " " + Integer.toString(distances.distanceFromRoot(cell), 36) + " ";
 			}else{
 				return "   ";
@@ -115,9 +122,9 @@ public class Grid implements Iterable<Cell>{
 	}
 
 	public void displayPathBetween(Cell start, Cell target){
-		Distances distances = start.distances().pathTo(target);
+		Distances dist = distances.pathTo(target);
 		Function<Cell, String> f = cell -> {
-			if (distances.contains(cell)){
+			if (dist.contains(cell)){
 				return ANSI_GREEN_BACKGROUND + "   " + ANSI_RESET;
 			}else{
 				return "   ";

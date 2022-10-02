@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 import maze.Utility;
-import maze.distances.Distances;
 
 public class Cell{
 	private int row,col;
@@ -104,25 +103,5 @@ public class Cell{
 
 	public void setWest(Cell west) {
 		this.west = west;
-	}
-
-	public Distances distances(){
-		Distances distances = new Distances(this);
-		List<Cell> frontier = new ArrayList<>();
-		frontier.add(this);
-
-		while (!frontier.isEmpty()){
-			List<Cell> frontier_new = new ArrayList<>(); 
-			for (Cell cell : frontier) {
-				for (Cell linked : cell.getLinks()) {
-					if (!distances.contains(linked)){
-						distances.setCellDistance(linked, distances.distanceFromRoot(cell) + 1);
-						frontier_new.add(linked);
-					}
-				}
-			}
-			frontier = frontier_new;
-		}
-		return distances;
 	}
 }
