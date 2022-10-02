@@ -1,5 +1,10 @@
 package maze.cells;
 
+import java.util.PriorityQueue;
+import java.util.Queue;
+
+import maze.distances.Distances;
+
 public class WeightedCell extends Cell implements Comparable<Cell>{
 
 	private int weight;
@@ -51,6 +56,37 @@ public class WeightedCell extends Cell implements Comparable<Cell>{
 		}else{
 			return getWeight() - 1;
 		}
+	}
+
+	@Override
+	public Distances distances(){
+		Distances distances = new Distances(this);
+		Queue<Cell> pending = new PriorityQueue<>((c1,c2) -> { //FIXME
+				int w1 = 1, w2 = 1;
+				if (c1 instanceof WeightedCell)
+					w1 = ((WeightedCell)c1).getWeight();
+				if (c2 instanceof WeightedCell)
+					w2 = ((WeightedCell)c2).getWeight();
+				return w1-w2;
+			}
+		);
+		pending.add(this);
+		while (!pending.isEmpty()){
+			Cell cell = pending.poll();
+
+			for (Cell linked : cell.getLinks()) {
+				int weight = 1;
+				if(linked instanceof WeightedCell){
+					weight = ((WeightedCell)linked).getWeight();
+				}
+				int totalWeight = distances.distanceFromRoot(cell) + weight;
+				if (!distances.contains(linked) || totalWeight < distances.distanceFromRoot(linked)){
+					pending.add(linked);
+					distances.setCellDistance(linked, totalWeight);
+				}
+			}
+		}
+		return distances;
 	}
 
 }

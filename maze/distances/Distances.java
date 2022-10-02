@@ -1,16 +1,13 @@
 package maze.distances;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 import maze.cells.Cell;
 
 public class Distances{
 
-	protected Cell root;
-	protected Map<Cell,Integer> cells;
+	private Cell root;
+	private Map<Cell,Integer> cells;
 
 	public Distances(Cell root) {
 		this.root = root;
@@ -18,23 +15,25 @@ public class Distances{
 		cells.put(root, 0);
 	}
 
-	public void distances(){
-		List<Cell> frontier = new ArrayList<>();
-		frontier.add(root);
+	// public static Distances standardDistances(Cell start){
+	// 	Distances distances = new Distances(start);
+	// 	List<Cell> frontier = new ArrayList<>();
+	// 	frontier.add(start);
 
-		while (!frontier.isEmpty()){
-			List<Cell> frontier_new = new ArrayList<>(); 
-			for (Cell cell : frontier) {
-				for (Cell linked : cell.getLinks()) {
-					if (!contains(linked)){
-						setCellDistance(linked, distanceFromRoot(cell) + 1);
-						frontier_new.add(linked);
-					}
-				}
-			}
-			frontier = frontier_new;
-		}
-	}
+	// 	while (!frontier.isEmpty()){
+	// 		List<Cell> frontier_new = new ArrayList<>(); 
+	// 		for (Cell cell : frontier) {
+	// 			for (Cell linked : cell.getLinks()) {
+	// 				if (!distances.contains(linked)){
+	// 					distances.setCellDistance(linked, distances.distanceFromRoot(cell) + 1);
+	// 					frontier_new.add(linked);
+	// 				}
+	// 			}
+	// 		}
+	// 		frontier = frontier_new;
+	// 	}
+	// 	return distances;
+	// }
 
 	public Distances pathTo(Cell target){
 		Cell current = target;

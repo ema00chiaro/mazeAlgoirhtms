@@ -74,7 +74,7 @@ public class Grid implements Iterable<Cell>{
 		displayGrid( c -> "   ");
 	}
 
-	private void displayGrid(Function<Cell,String> f) {
+	private void displayGrid(Function<Cell,String> cellContent) {
 		System.out.print("+");
 		for(int j = 0; j < cols; j++){
 			System.out.print("---+");
@@ -85,7 +85,7 @@ public class Grid implements Iterable<Cell>{
 			String top = "|";
 			String bottom = "+";
 			for(int j = 0; j < cols; j++){
-				String body = f.apply(grid[i][j]);
+				String body = cellContent.apply(grid[i][j]);
 				String east_boundary = ((grid[i][j].isLinkedTo(grid[i][j].getEast())? " " : "|"));
 				top += body + east_boundary;
 				String south_boundary = ((grid[i][j].isLinkedTo(grid[i][j].getSouth())? "   " : "---"));
@@ -97,12 +97,13 @@ public class Grid implements Iterable<Cell>{
 		}
 	}
 
-	public void displayDistances(Cell start, Distances distances){
-		displayGrid(c -> " " + Integer.toString(distances.distanceFromRoot(c), 36) + " ");
+	public void displayDistances(Cell start){
+		Distances d = start.distances();
+		displayGrid(c -> " " + Integer.toString(d.distanceFromRoot(c), 36) + " ");
 	}
 	
-	public void displayDistanceBetween(Cell start, Cell target, Distances d){
-		Distances distances = d.pathTo(target);
+	public void displayDistanceBetween(Cell start, Cell target){
+		Distances distances = start.distances().pathTo(target);
 		Function<Cell, String> f = cell -> {
 			if (distances.contains(cell)){
 				return " " + Integer.toString(distances.distanceFromRoot(cell), 36) + " ";
@@ -113,8 +114,8 @@ public class Grid implements Iterable<Cell>{
 		displayGrid(f);
 	}
 
-	public void displayPathBetween(Cell start, Cell target, Distances d){
-		Distances distances = d.pathTo(target);
+	public void displayPathBetween(Cell start, Cell target){
+		Distances distances = start.distances().pathTo(target);
 		Function<Cell, String> f = cell -> {
 			if (distances.contains(cell)){
 				return ANSI_GREEN_BACKGROUND + "   " + ANSI_RESET;
