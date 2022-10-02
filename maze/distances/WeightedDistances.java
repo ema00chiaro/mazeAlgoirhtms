@@ -41,29 +41,4 @@ public class WeightedDistances extends Distances {
 			}
 		}
 	}
-
-	//questa roba era dentro la classe cella
-	// public Distances distances(Cell start){
-	// 	StandardDistances weights = new StandardDistances(start);
-	// 	Queue<WeightedCell> pending = new PriorityQueue<>();
-	// 	pending.add(start);
-
-	// 	while (!pending.isEmpty()){
-	// 		Cell cell = pending.poll();
-	// 		for (Cell c : cell.getLinks()) {
-	// 			WeightedCell linked;/* = (WeightedCell)c; //FIXME */
-	// 			if(c instanceof WeightedCell){
-	// 				linked = (WeightedCell)c;
-	// 			}else{
-	// 				linked = new WeightedCell(c);
-	// 			}
-	// 			int totalWeight = weights.distanceFromRoot(cell) + linked.getWeight();
-	// 			if (!weights.contains(linked) || totalWeight < weights.distanceFromRoot(linked)){
-	// 				pending.add(linked);
-	// 				weights.setCellDistance(linked, totalWeight);
-	// 			}
-	// 		}
-	// 	}
-	// 	return weights;
-	// }
 }

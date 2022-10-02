@@ -65,35 +65,4 @@ public class Distances{
 	public void setCellDistance(Cell cell, int newDistance){
 		cells.put(cell, newDistance);
 	}
-
-	// public Set<Cell> getCells(){
-	// 	return cells.keySet();
-	// }
-
-	// public Map<Cell,Integer> getDistancesMap(){
-	// 	return cells;
-	// }
-
-	// public Cell getRoot() {
-	// 	return root;
-	// }
-
-	// public Distances distances(Cell start){
-	// 	StandardDistances distances = new StandardDistances(start);
-	// 	List<Cell> frontier = new ArrayList<>();
-	// 	frontier.add(start);
-	// 	while (!frontier.isEmpty()){
-	// 		List<Cell> frontier_new = new ArrayList<>(); 
-	// 		for (Cell cell : frontier) {
-	// 			for (Cell linked : cell.getLinks()) {
-	// 				if (!distances.contains(linked)){ // da rivedere
-	// 					distances.setCellDistance(linked, distances.distanceFromRoot(cell) + 1);
-	// 					frontier_new.add(linked);
-	// 				}
-	// 			}
-	// 		}
-	// 		frontier = frontier_new;
-	// 	}
-	// 	return distances;
-	// }
 }
