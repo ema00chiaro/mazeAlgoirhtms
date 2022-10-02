@@ -101,18 +101,15 @@ public class Grid implements Iterable<Cell>{
 		this.distances = d;
 	}
 
-	// public void displayDistances(Cell start){
-	// 	displayGrid(c -> " " + Integer.toString(distances.distanceFromRoot(c), 36) + " ");
-	// }
-
-	public void displayDistances(){
-		displayGrid(c -> " " + Integer.toString(distances.distanceFromRoot(c), 36) + " ");
+	public void displayDistances(Cell start){
+		Distances dist = distances.distancesFrom(start);
+		displayGrid(c -> " " + Integer.toString(dist.distanceFromRoot(c), 36) + " ");
 	}
 	
 	public void displayDistanceBetween(Cell start, Cell target){
-		Distances dist = distances.pathTo(target);
+		distances = distances.distancesFrom(start).pathTo(target);
 		Function<Cell, String> f = cell -> {
-			if (dist.contains(cell)){
+			if (distances.contains(cell)){
 				return " " + Integer.toString(distances.distanceFromRoot(cell), 36) + " ";
 			}else{
 				return "   ";
@@ -122,9 +119,9 @@ public class Grid implements Iterable<Cell>{
 	}
 
 	public void displayPathBetween(Cell start, Cell target){
-		Distances dist = distances.pathTo(target);
+		distances = distances.distancesFrom(start).pathTo(target);
 		Function<Cell, String> f = cell -> {
-			if (dist.contains(cell)){
+			if (distances.contains(cell)){
 				return ANSI_GREEN_BACKGROUND + "   " + ANSI_RESET;
 			}else{
 				return "   ";
