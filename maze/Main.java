@@ -4,15 +4,17 @@ import maze.cells.Cell;
 import maze.cells.WeightedCell;
 import maze.distances.Distances;
 import maze.distances.WeightedDistances;
+import maze.factories.StandardCellFactory;
+import maze.factories.WeightedCellFactory;
 import maze.generationAlgorithms.*;
 
 class tests{
 	public static void main (String[] args) {
-		int rows = 20;
-		int cols = 40;
+		int rows = 10;
+		int cols = 10;
 
 		//Grid grid = new Grid(rows, cols, new WeightedCellFactory(20));
-		Grid grid = new WeightedGrid(rows, cols);
+		Grid grid = new Grid(rows, cols, new StandardCellFactory());
 		grid.setDistances(new WeightedDistances());
 		RecursiveDivision.buildMaze(grid);
 		//GrowingTree.buildMaze(grid, list -> Utility.getRandomElement(list));

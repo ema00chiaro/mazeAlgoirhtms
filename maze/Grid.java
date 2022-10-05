@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.function.Function;
 
 import maze.cells.Cell;
 import maze.distances.Distances;
+import maze.factories.CellFactory;
 
 public class Grid implements Iterable<Cell>{
 
@@ -17,18 +19,18 @@ public class Grid implements Iterable<Cell>{
 	public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
 	private Distances distances;
 
-	public Grid(int rows, int cols) {
+	public Grid(int rows, int cols, CellFactory cf) {
 		this.rows = rows;
 		this.cols = cols;
-		grid = new Cell[rows][cols];
-		prepareGrid();
+		grid =cf.createGrid(rows, cols);
+		prepareGrid(cf);
 		configureCells();
 	}
 
-	public void prepareGrid(){
+	public void prepareGrid(CellFactory cf){
 		for (int i = 0; i < rows; i++){
 			for (int j = 0; j < cols; j++){
-				grid[i][j] = new Cell(i, j);
+				grid[i][j] = cf.createCell(i, j);
 			}
 		}
 	}
@@ -178,15 +180,15 @@ public class Grid implements Iterable<Cell>{
 	public void braid(){
 		for (Cell cell : findDeadends()) {
 			if(cell.getLinks().size() == 1 && Utility.randomBoolean(2)){ //arrivati in un vicolo cieco aggiungiamo un ciclo al 50%
-				List<Cell> neighbours = cell.getNeighbours();
+				Set<Cell> neighbours = cell.getNeighbours();
 				neighbours.removeAll(cell.getLinks());
 
-				List<Cell> best = neighbours;
+				Set<Cell> best = neighbours;
 				best.removeIf( c -> cell.getLinks().size() != 1);
 				if (best.isEmpty())
 					best = neighbours;
 
-				Cell neighbour = best.get(new Random().nextInt(best.size()));
+				Cell neighbour = Utility.getRandomElement(best);
 				cell.link(neighbour);
 			}
 		}

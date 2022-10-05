@@ -25,7 +25,7 @@ public class GrowingTree {
 		while(!active.isEmpty()){
 			Cell cell = fun.apply(active.stream().toList());
 
-			List<Cell> neighboursPool = cell.getNeighbours();
+			Set<Cell> neighboursPool = cell.getNeighbours();
 			neighboursPool.removeIf( c -> c.hasLinks());
 
 			if (!neighboursPool.isEmpty()){
