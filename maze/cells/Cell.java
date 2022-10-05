@@ -18,18 +18,24 @@ public class Cell{
 		links = new HashSet<>();
 	}
 	
-	public boolean link(Cell cell){
-		boolean added = links.add(cell);
-		if (added)
-			cell.link(this);
-		return added;
+	public void link(Cell cell){
+		link(cell, true);
 	}
 
-	public boolean unlink(Cell cell){
-		boolean removed = links.remove(cell);
-		if(removed)
-			cell.unlink(this);
-		return removed;
+	public void link(Cell cell, boolean bidi){
+		links.add(cell);
+		if (bidi)
+			cell.link(this,false);
+	}
+
+	public void unlink(Cell cell){
+		unlink(cell, true);
+	}
+
+	public void unlink(Cell cell, boolean bidi){
+		links.remove(cell);
+		if(bidi)
+			cell.unlink(this,false);
 	}
 	
 	public Cell getRandomNeighbour(){

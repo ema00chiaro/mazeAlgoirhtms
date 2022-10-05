@@ -115,12 +115,12 @@ public class Distances{
 	public Distances pathTo(Cell target){
 		Cell current = target;
 		Distances breadcrumbs = new Distances(root);
-		breadcrumbs.cells.put(current, distanceFromRoot(current));
+		breadcrumbs.setCellDistance(current, distanceFromRoot(current));
 		
 		while(!current.equals(root)){
 			for (Cell linked : current.getLinks()) {
 				if(distanceFromRoot(linked) < distanceFromRoot(current)){ // da rivedere
-					breadcrumbs.cells.put(linked, distanceFromRoot(linked));
+					breadcrumbs.setCellDistance(linked, distanceFromRoot(linked));
 					current = linked;
 					break;
 				}
