@@ -49,14 +49,14 @@ public class Cell{
 
 	}
 
-	public List<Cell> getNeighbours(){
+	public Set<Cell> getNeighbours(){
 		Set<Cell> pool = new HashSet<>();
 		pool.add(north);
 		pool.add(south);
 		pool.add(east);
 		pool.add(west);
 		pool.remove(null); //nel caso una cella non abbia alcuni vicini
-		return new ArrayList<>(pool);
+		return pool;
 	}
 
 	public boolean hasLinks(){
