@@ -40,8 +40,7 @@ public class Cell{
 	}
 
 	public void unlink(Cell n){
-		//NOT bidirectional
-		unlink(n,false);
+		unlink(n,true);
 	}
 
 	public void unlink(Cell n, boolean bidi){
