@@ -74,7 +74,7 @@ public class Cell{
 		return links.containsKey(n);
 	}
 
-	protected void setWeight(int weight) {
+	public void setWeight(int weight) {
 		this.weight = weight;
 	}
 

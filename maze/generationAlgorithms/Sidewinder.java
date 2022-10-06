@@ -3,14 +3,16 @@ package maze.generationAlgorithms;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 
 import maze.Grid;
+import maze.Utility;
 import maze.cells.Cell;
 
 public class Sidewinder {
 
 	public static void buildMaze(Grid grid){
+		// for (int i = grid.getRows()-1; i >= 0; i--){
+		// 	Cell[] cells = grid.getGrid()[i]; 
 		for (Cell[] cells : grid.getGrid()) {
 			List<Cell> run = new ArrayList<>();
 
@@ -19,16 +21,19 @@ public class Sidewinder {
 				boolean eastern_limit = (Objects.isNull(grid.getEast(cell)));
 				boolean nothern_limit = (Objects.isNull(grid.getNorth(cell)));
 
-				boolean carve_north = eastern_limit || (!nothern_limit && (new Random().nextInt(3) == 0));
+				boolean carve_north = eastern_limit || (!nothern_limit && Utility.randomBoolean(3));
 
 				if (carve_north){
-					Cell randomCell = run.get(new Random().nextInt(run.size()));
-					if (!nothern_limit) // nel caso della cella in alto a dx si ha carve_north = true, questo controllo è necessario
+					Cell randomCell = Utility.getRandomElement(run);
+					if (!nothern_limit){ // nel caso della cella in alto a dx si ha carve_north = true, questo controllo è necessario
 						randomCell.link(grid.getNorth(randomCell));
+					}
+					run.clear();
 				}else{
 					cell.link(grid.getEast(cell));
 				}
-				run.clear();
+				
+				//grid.displayGrid();
 			}
 		}
 	}

@@ -25,7 +25,6 @@ public class Grid implements Iterable<Cell>{
 		this.cols = cols;
 		grid =cf.createGrid(rows, cols);
 		prepareGrid(cf);
-		//configureCells();
 	}
 
 	public void prepareGrid(CellFactory cf){
@@ -129,9 +128,21 @@ public class Grid implements Iterable<Cell>{
 		displayGrid(c -> " " + Integer.toString(dist.distanceFromRoot(c), 36) + " ");
 	}
 
-	//METODO NUOVO PER FARE TUTTO
+	//METODI NUOVO PER FARE TUTTO
 	public void displayDistances(Distances distances){
 		displayGrid(c -> " " + Integer.toString(distances.distanceFromRoot(c), 36) + " ");
+	}
+
+	//METODI NUOVO PER FARE TUTTO
+	public void displayDistancesWithBackgroundColor(Distances distances){
+		Function<Cell, String> f = cell -> {
+			if (distances.contains(cell)){
+				return ANSI_GREEN_BACKGROUND + "   " + ANSI_RESET;
+			}else{
+				return "   ";
+			}
+		};
+		displayGrid(f);
 	}
 	
 	public void displayDistanceBetween(Cell start, Cell target){
