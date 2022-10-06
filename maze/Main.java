@@ -14,7 +14,7 @@ class tests{
 		int cols = 10;
 
 		//Grid grid = new Grid(rows, cols, new WeightedCellFactory(20));
-		Grid grid = new Grid(rows, cols, new StandardCellFactory());
+		Grid grid = new Grid(rows, cols, new WeightedCellFactory(20));
 		grid.setDistances(new WeightedDistances());
 		RecursiveDivision.buildMaze(grid);
 		//GrowingTree.buildMaze(grid, list -> Utility.getRandomElement(list));

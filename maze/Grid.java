@@ -107,6 +107,11 @@ public class Grid implements Iterable<Cell>{
 		Distances dist = distances.distancesFrom(start);
 		displayGrid(c -> " " + Integer.toString(dist.distanceFromRoot(c), 36) + " ");
 	}
+
+	//METODO NUOVO PER FARE TUTTO
+	public void displayDistances(Distances distances){
+		displayGrid(c -> " " + Integer.toString(distances.distanceFromRoot(c), 36) + " ");
+	}
 	
 	public void displayDistanceBetween(Cell start, Cell target){
 		Distances dist = distances.distancesFrom(start).pathTo(target);

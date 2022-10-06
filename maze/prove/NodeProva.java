@@ -1,4 +1,4 @@
-package maze.cells;
+package maze.prove;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,44 +7,44 @@ import java.util.Set;
 
 import maze.Utility;
 
-public class Cell{
+public abstract class NodeProva {
 	private int row,col;
 	private int weight;
-	private Map<Cell, Integer> links;
+	private Map<NodeProva, Integer> links;
 
-	public Cell(int row, int col, int weight) {
+	public NodeProva(int row, int col, int weight) {
 		this.row = row;
 		this.col = col;
 		this.weight = weight;
 		links = new HashMap<>();
 	}
 
-	public void link(Cell n, int weight){
+	public void link(NodeProva n, int weight){
 		//NOT bidirectional
 		link(n,weight,false);
 	}
 
-	public void link(Cell n){
+	public void link(NodeProva n){
 		link(n,1,true);
 	}
 
-	public void link(Cell n, boolean bidi){
+	public void link(NodeProva n, boolean bidi){
 		link(n,1,bidi);
 	}
 	
-	public void link(Cell n, int weight, boolean bidi){
+	public void link(NodeProva n, int weight, boolean bidi){
 		links.put(n,weight);
 		if(bidi){
 			n.link(this,weight,false);
 		}
 	}
 
-	public void unlink(Cell n){
+	public void unlink(NodeProva n){
 		//NOT bidirectional
 		unlink(n,false);
 	}
 
-	public void unlink(Cell n, boolean bidi){
+	public void unlink(NodeProva n, boolean bidi){
 		links.remove(n);
 		if(bidi){
 			n.unlink(this, false);
@@ -59,7 +59,7 @@ public class Cell{
 		return col;
 	}
 
-	public Set<Cell> getLinks() {
+	public Set<NodeProva> getLinks() {
 		return links.keySet();
 	}
 
@@ -71,7 +71,7 @@ public class Cell{
 		return !links.isEmpty();
 	}
 
-	public boolean isLinkedTo(Cell n){
+	public boolean isLinkedTo(NodeProva n){
 		return links.containsKey(n);
 	}
 
@@ -80,10 +80,10 @@ public class Cell{
 	}
 
 	//------------------------------------------------------------------------------------------------------------------------------------------
-	protected Cell north,south,east,west; 
+	protected NodeProva north,south,east,west; 
 	
-	public Cell getRandomNeighbour(){
-		Set<Cell> pool = new HashSet<>();
+	public NodeProva getRandomNeighbour(){
+		Set<NodeProva> pool = new HashSet<>();
 		pool.add(north);
 		pool.add(south);
 		pool.add(east);
@@ -93,8 +93,8 @@ public class Cell{
 
 	}
 
-	public Set<Cell> getNeighbours(){
-		Set<Cell> pool = new HashSet<>();
+	public Set<NodeProva> getNeighbours(){
+		Set<NodeProva> pool = new HashSet<>();
 		pool.add(north);
 		pool.add(south);
 		pool.add(east);
@@ -103,35 +103,35 @@ public class Cell{
 		return pool;
 	}
 
-	public Cell getNorth() {
+	public NodeProva getNorth() {
 		return north;
 	}
 
-	public void setNorth(Cell north) {
+	public void setNorth(NodeProva north) {
 		this.north = north;
 	}
 
-	public Cell getSouth() {
+	public NodeProva getSouth() {
 		return south;
 	}
 
-	public void setSouth(Cell south) {
+	public void setSouth(NodeProva south) {
 		this.south = south;
 	}
 
-	public Cell getEast() {
+	public NodeProva getEast() {
 		return east;
 	}
 
-	public void setEast(Cell east) {
+	public void setEast(NodeProva east) {
 		this.east = east;
 	}
 
-	public Cell getWest() {
+	public NodeProva getWest() {
 		return west;
 	}
 
-	public void setWest(Cell west) {
+	public void setWest(NodeProva west) {
 		this.west = west;
 	}
 }
