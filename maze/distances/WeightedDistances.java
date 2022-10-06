@@ -11,15 +11,7 @@ public class WeightedDistances extends Distances {
 	@Override
 	public Distances distancesFrom(Cell start){
 		Distances distances = new Distances(start);
-		Queue<Cell> pending = new PriorityQueue<>((c1,c2) -> { //FIXME
-				int w1 = 1, w2 = 1;
-				if (c1 instanceof WeightedCell)
-					w1 = ((WeightedCell)c1).getWeight();
-				if (c2 instanceof WeightedCell)
-					w2 = ((WeightedCell)c2).getWeight();
-				return w1-w2;
-			}
-		);
+		Queue<Cell> pending = new PriorityQueue<>((c1,c2) -> c1.getWeight()-c2.getWeight()	);
 		pending.add(start);
 		while (!pending.isEmpty()){
 			Cell cell = pending.poll();
