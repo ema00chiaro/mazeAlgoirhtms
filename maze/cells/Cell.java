@@ -59,6 +59,10 @@ public class Cell{
 		return links.keySet();
 	}
 
+	public Integer getWeightOfLink(Cell cell){
+		return links.get(cell);
+	}
+
 	public int getWeight() {
 		return weight;
 	}

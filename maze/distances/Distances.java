@@ -2,15 +2,22 @@ package maze.distances;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
+import maze.Grid;
 import maze.cells.Cell;
 
 public class Distances{
 
 	protected Cell root; 
-	protected Map<Cell,Integer> cells;
+	protected Map<Cell,Double> cells;
 
 	public Distances(){
 
@@ -19,28 +26,8 @@ public class Distances{
 	protected Distances(Cell root){
 		this.root = root;
 		cells = new HashMap<>();
-		cells.put(root, 0);
+		cells.put(root, 0.0);
 	}
-
-	// public static Distances standardDistances(Cell start){
-	// 	Distances distances = new Distances(start);
-	// 	List<Cell> frontier = new ArrayList<>();
-	// 	frontier.add(start);
-
-	// 	while (!frontier.isEmpty()){
-	// 		List<Cell> frontier_new = new ArrayList<>(); 
-	// 		for (Cell cell : frontier) {
-	// 			for (Cell linked : cell.getLinks()) {
-	// 				if (!distances.contains(linked)){
-	// 					distances.setCellDistance(linked, distances.distanceFromRoot(cell) + 1);
-	// 					frontier_new.add(linked);
-	// 				}
-	// 			}
-	// 		}
-	// 		frontier = frontier_new;
-	// 	}
-	// 	return distances;
-	// }
 
 	// public static Distances standardDistances(Cell start){
 	// 	Distances distances = new Distances(start);
@@ -129,7 +116,68 @@ public class Distances{
 		return breadcrumbs;
 	}
 
-	public int distanceFromRoot(Cell cell){
+	public Distances aStarSearch(Grid g,Cell start, Cell target, BiFunction<Cell,Cell,Double> heuristic){
+		class RouteElement implements Comparable<RouteElement>{
+
+			Cell cell;
+			double f = Double.MAX_VALUE;
+			double g = Double.MAX_VALUE;
+
+			public RouteElement(Cell cell) {
+				this.cell = cell;
+			}
+
+			@Override
+			public int compareTo(RouteElement o) {
+				return Double.compare(f, o.f);
+			}
+
+			public double calculateHeuristic(RouteElement n){
+				return heuristic.apply(cell, n.cell);
+			}
+		}
+		Distances distances = new Distances(start);
+
+		RouteElement from = new RouteElement(start);
+		RouteElement to = new RouteElement(target);
+		
+		Queue<RouteElement> closed = new PriorityQueue<>();
+		Queue<RouteElement> open = new PriorityQueue<>();
+
+		from.f = from.g + from.calculateHeuristic(to);
+		open.add(from);
+
+		while(!open.isEmpty()){
+			RouteElement element = open.peek();
+			if(element == to){
+				break;
+			}
+
+			for (Cell linked : element.cell.getLinks()) {
+				RouteElement linkedElement = new RouteElement(linked);
+				double totalWeight = element.g + element.cell.getWeightOfLink(linked);
+
+				if(!open.contains(linkedElement) && !closed.contains(linkedElement)){
+					distances.setCellDistance(linkedElement.cell, totalWeight);
+					linkedElement.g = totalWeight;
+					linkedElement.f = linkedElement.g + linkedElement.calculateHeuristic(to);
+					open.add(linkedElement);
+
+					if(closed.contains(linkedElement)){
+						closed.remove(linkedElement);
+						open.add(linkedElement);
+					}
+				}
+				g.displayDistances(distances);
+			}
+			open.remove(element);
+			closed.add(element);
+		}
+
+		return distances;
+	}
+
+	public double distanceFromRoot(Cell cell){
 		return cells.get(cell);
 	}
 
@@ -137,7 +185,7 @@ public class Distances{
 		return cells.containsKey(cell);
 	}
 
-	public void setCellDistance(Cell cell, int newDistance){
+	public void setCellDistance(Cell cell, double newDistance){
 		cells.put(cell, newDistance);
 	}
 }

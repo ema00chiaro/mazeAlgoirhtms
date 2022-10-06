@@ -18,7 +18,7 @@ public class Grid implements Iterable<Cell>{
 	protected Cell[][] grid;
 	public static final String ANSI_RESET = "\u001B[0m";
 	public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
-	private Distances distances;
+	// private Distances distances;
 
 	public Grid(int rows, int cols, CellFactory cf) {
 		this.rows = rows;
@@ -119,22 +119,29 @@ public class Grid implements Iterable<Cell>{
 		}
 	}
 
-	public void setDistances(Distances d){
-		this.distances = d;
-	}
+	// public void setDistances(Distances d){
+	// 	this.distances = d;
+	// }
 
-	public void displayDistances(Cell start){
-		Distances dist = distances.distancesFrom(start);
-		displayGrid(c -> " " + Integer.toString(dist.distanceFromRoot(c), 36) + " ");
-	}
+	// // public void displayDistances(Cell start){
+	// // 	Distances dist = distances.distancesFrom(start);
+	// // 	displayGrid(c -> " " + Integer.toString((int)dist.distanceFromRoot(c), 36) + " ");
+	// // }
 
 	//METODI NUOVO PER FARE TUTTO
 	public void displayDistances(Distances distances){
-		displayGrid(c -> " " + Integer.toString(distances.distanceFromRoot(c), 36) + " ");
+		Function<Cell, String> f = cell -> {
+			if (distances.contains(cell)){
+				return " " + Integer.toString((int)distances.distanceFromRoot(cell), 36) + " ";
+			}else{
+				return "   ";
+			}
+		};
+		displayGrid(f);
 	}
 
 	//METODI NUOVO PER FARE TUTTO
-	public void displayDistancesWithBackgroundColor(Distances distances){
+	public void displayColoredDistances(Distances distances){
 		Function<Cell, String> f = cell -> {
 			if (distances.contains(cell)){
 				return ANSI_GREEN_BACKGROUND + "   " + ANSI_RESET;
@@ -145,29 +152,29 @@ public class Grid implements Iterable<Cell>{
 		displayGrid(f);
 	}
 	
-	public void displayDistanceBetween(Cell start, Cell target){
-		Distances dist = distances.distancesFrom(start).pathTo(target);
-		Function<Cell, String> f = cell -> {
-			if (dist.contains(cell)){
-				return " " + Integer.toString(dist.distanceFromRoot(cell), 36) + " ";
-			}else{
-				return "   ";
-			}
-		};
-		displayGrid(f);
-	}
+	// // public void displayDistanceBetween(Cell start, Cell target){
+	// // 	Distances dist = distances.distancesFrom(start).pathTo(target);
+	// // 	Function<Cell, String> f = cell -> {
+	// // 		if (dist.contains(cell)){
+	// // 			return " " + Integer.toString((int)dist.distanceFromRoot(cell), 36) + " ";
+	// // 		}else{
+	// // 			return "   ";
+	// // 		}
+	// // 	};
+	// // 	displayGrid(f);
+	// // }
 
-	public void displayPathBetween(Cell start, Cell target){
-		Distances dist = distances.distancesFrom(start).pathTo(target);
-		Function<Cell, String> f = cell -> {
-			if (dist.contains(cell)){
-				return ANSI_GREEN_BACKGROUND + "   " + ANSI_RESET;
-			}else{
-				return "   ";
-			}
-		};
-		displayGrid(f);
-	}
+	// // public void displayPathBetween(Cell start, Cell target){
+	// // 	Distances dist = distances.distancesFrom(start).pathTo(target);
+	// // 	Function<Cell, String> f = cell -> {
+	// // 		if (dist.contains(cell)){
+	// // 			return ANSI_GREEN_BACKGROUND + "   " + ANSI_RESET;
+	// // 		}else{
+	// // 			return "   ";
+	// // 		}
+	// // 	};
+	// // 	displayGrid(f);
+	// // }
 
 	public Cell[][] getGrid(){
 		return grid;

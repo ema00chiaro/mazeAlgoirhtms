@@ -21,7 +21,7 @@ public class WeightedDistances extends Distances {
 				if(linked instanceof WeightedCell){
 					weight = ((WeightedCell)linked).getWeight();
 				}
-				int totalWeight = distances.distanceFromRoot(cell) + weight;
+				double totalWeight = distances.distanceFromRoot(cell) + weight;
 				if (!distances.contains(linked) || totalWeight < distances.distanceFromRoot(linked)){
 					pending.add(linked);
 					distances.setCellDistance(linked, totalWeight);
