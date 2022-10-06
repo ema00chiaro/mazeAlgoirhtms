@@ -18,8 +18,8 @@ class tests{
 		grid.setDistances(new WeightedDistances());
 		HuntAndKill.buildMaze(grid);
 		//GrowingTree.buildMaze(grid, list -> Utility.getRandomElement(list));
-		grid.displayGrid();
-		grid.braid();
+		//grid.displayGrid();
+		//grid.braid();
 		Cell start = grid.getCellAt(0, 0);
 		Cell target = grid.getCellAt(rows-1, cols-1);
 
@@ -28,8 +28,8 @@ class tests{
 		grid.displayDistances(start);
 		grid.displayDistanceBetween(start, target);
 		grid.displayPathBetween(start, target);
-		grid.getCellAt(0,1).setWeight(1000);
+		//grid.getCellAt(0,1).setWeight(1000);
 		//grid.displayDistances(start);
-		grid.displayPathBetween(start, target);
+		//grid.displayPathBetween(start, target);
 	}
 }

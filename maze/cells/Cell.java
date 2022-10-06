@@ -1,11 +1,8 @@
 package maze.cells;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import maze.Utility;
 
 public class Cell{
 	private int row,col;
