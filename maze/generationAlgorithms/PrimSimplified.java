@@ -24,7 +24,7 @@ public class PrimSimplified {
 		while(!active.isEmpty()){
 			Cell cell = Utility.getRandomElement(active.stream().toList());
 
-			Set<Cell> neighboursPool = cell.getNeighbours();
+			Set<Cell> neighboursPool = grid.getNeighbours(cell);
 			neighboursPool.removeIf( c -> c.hasLinks());
 
 			if (!neighboursPool.isEmpty()){

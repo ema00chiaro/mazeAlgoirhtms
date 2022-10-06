@@ -8,7 +8,7 @@ public class RecursiveDivision {
 	
 	public static void buildMaze(Grid grid){
 		for (Cell cell : grid) {//si potrebbe non iterare su tutte le celle dato che il metodo link effettua un link reciproco
-			for (Cell neighbour : cell.getNeighbours()) {
+			for (Cell neighbour : grid.getNeighbours(cell)) {
 				cell.link(neighbour,false);
 			}
 		}
@@ -35,7 +35,7 @@ public class RecursiveDivision {
 		for(int i = 0; i < width; i++){
 			if (passageAt != i){
 				Cell cell = grid.getGrid()[row+divideSouthOf][col+i];
-				cell.unlink(cell.getSouth());
+				cell.unlink(grid.getSouth(cell));
 			}
 		}
 		divide(row, col, divideSouthOf+1, width, grid);
@@ -49,7 +49,7 @@ public class RecursiveDivision {
 		for(int i = 0; i < height; i++){
 			if (passageAt != i){
 				Cell cell = grid.getGrid()[row+i][col+divideEastOf];
-				cell.unlink(cell.getEast());
+				cell.unlink(grid.getEast(cell));
 			}
 		}
 		divide(row, col, height, divideEastOf+1, grid);

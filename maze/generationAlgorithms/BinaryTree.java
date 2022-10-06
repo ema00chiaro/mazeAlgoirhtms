@@ -18,8 +18,8 @@ public class BinaryTree {
 			// 	neighbours.add(cell.getEast());
 
 			Set<Cell> neighbours = new HashSet<>();
-			neighbours.add(cell.getNorth());
-			neighbours.add(cell.getEast());
+			neighbours.add(grid.getNorth(cell));
+			neighbours.add(grid.getEast(cell));
 			neighbours.remove(null);
 			
 			if (!neighbours.isEmpty()){

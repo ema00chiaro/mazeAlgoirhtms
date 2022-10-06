@@ -12,7 +12,7 @@ public class HuntAndKill {
 		Cell current = grid.randomCell();
 
 		while (!Objects.isNull(current)){
-			List<Cell> unvisitedNeighbours = current.getNeighbours().stream().filter( c -> !c.hasLinks()).toList();
+			List<Cell> unvisitedNeighbours = grid.getNeighbours(current).stream().filter( c -> !c.hasLinks()).toList();
 
 			Cell neighbour;
 			if(!unvisitedNeighbours.isEmpty()){
@@ -23,7 +23,7 @@ public class HuntAndKill {
 			}else{
 				current = null;
 				for (Cell cell : grid) {
-					List<Cell> visitedNeighbours = cell.getNeighbours().stream().filter(c -> c.hasLinks()).toList();
+					List<Cell> visitedNeighbours = grid.getNeighbours(cell).stream().filter(c -> c.hasLinks()).toList();
 					if (!cell.hasLinks() && !visitedNeighbours.isEmpty()){
 						current = cell;
 						neighbour = Utility.getRandomElement(visitedNeighbours);

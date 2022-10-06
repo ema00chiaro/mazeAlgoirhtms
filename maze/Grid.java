@@ -1,6 +1,7 @@
 package maze;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -24,7 +25,7 @@ public class Grid implements Iterable<Cell>{
 		this.cols = cols;
 		grid =cf.createGrid(rows, cols);
 		prepareGrid(cf);
-		configureCells();
+		//configureCells();
 	}
 
 	public void prepareGrid(CellFactory cf){
@@ -34,16 +35,42 @@ public class Grid implements Iterable<Cell>{
 			}
 		}
 	}
-	
-	private void configureCells() {
-		for (int i = 0; i < rows; i++){
-			for (int j = 0; j < cols; j++){
-				grid[i][j].setNorth(getCellAt(i-1,j));
-				grid[i][j].setSouth(getCellAt(i+1,j));
-				grid[i][j].setEast(getCellAt(i,j+1));
-				grid[i][j].setWest(getCellAt(i,j-1));
-			}
-		}
+
+	public Cell getNorth(Cell c){
+		return getCellAt(c.getRow()-1, c.getCol());
+	}
+
+	public Cell getEast(Cell c){
+		return getCellAt(c.getRow(), c.getCol()+1);
+	}
+
+	public Cell getWest(Cell c){
+		return getCellAt(c.getRow(), c.getCol()-1);
+	}
+
+	public Cell getSouth(Cell c){
+		return getCellAt(c.getRow()+1, c.getCol());
+	}
+
+	public Cell getCellAt(int i, int j) {
+		if ((i >= 0 && i <= rows-1) && (j >= 0 && j <= cols-1))
+			return grid[i][j];
+		else
+			return null;
+	}
+
+	public Set<Cell> getNeighbours(Cell c){
+		Set<Cell> neighbours = new HashSet<>();
+		neighbours.add(getNorth(c));
+		neighbours.add(getSouth(c));
+		neighbours.add(getEast(c));
+		neighbours.add(getWest(c));
+		neighbours.remove(null);
+		return neighbours;
+	}
+
+	public Cell getRandomNeighbour(Cell c){
+		return Utility.getRandomElement(getNeighbours(c));
 	}
 
 	public Cell randomCell(){
@@ -57,12 +84,6 @@ public class Grid implements Iterable<Cell>{
 		return rows*cols;
 	}
 
-	public Cell getCellAt(int i, int j) {
-		if ((i >= 0 && i <= rows-1) && (j >= 0 && j <= cols-1))
-			return grid[i][j];
-		else
-			return null;
-	}
 
 	public int getRows() {
 		return rows;
@@ -88,9 +109,9 @@ public class Grid implements Iterable<Cell>{
 			String bottom = "+";
 			for(int j = 0; j < cols; j++){
 				String body = cellContent.apply(grid[i][j]);
-				String east_boundary = ((grid[i][j].isLinkedTo(grid[i][j].getEast())? " " : "|"));
+				String east_boundary = ((grid[i][j].isLinkedTo(getEast(grid[i][j]))? " " : "|"));
 				top += body + east_boundary;
-				String south_boundary = ((grid[i][j].isLinkedTo(grid[i][j].getSouth())? "   " : "---"));
+				String south_boundary = ((grid[i][j].isLinkedTo(getSouth(grid[i][j]))? "   " : "---"));
 				String corner = "+";
 				bottom += south_boundary + corner;
 			}
@@ -185,7 +206,7 @@ public class Grid implements Iterable<Cell>{
 	public void braid(){
 		for (Cell cell : findDeadends()) {
 			if(cell.getLinks().size() == 1 && Utility.randomBoolean(2)){ //arrivati in un vicolo cieco aggiungiamo un ciclo al 50%
-				Set<Cell> neighbours = cell.getNeighbours();
+				Set<Cell> neighbours = getNeighbours(cell);
 				neighbours.removeAll(cell.getLinks());
 
 				Set<Cell> best = neighbours;

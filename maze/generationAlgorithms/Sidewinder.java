@@ -16,17 +16,17 @@ public class Sidewinder {
 
 			for (Cell cell : cells) {
 				run.add(cell);
-				boolean eastern_limit = (Objects.isNull(cell.getEast()));
-				boolean nothern_limit = (Objects.isNull(cell.getNorth()));
+				boolean eastern_limit = (Objects.isNull(grid.getEast(cell)));
+				boolean nothern_limit = (Objects.isNull(grid.getNorth(cell)));
 
 				boolean carve_north = eastern_limit || (!nothern_limit && (new Random().nextInt(3) == 0));
 
 				if (carve_north){
 					Cell randomCell = run.get(new Random().nextInt(run.size()));
 					if (!nothern_limit) // nel caso della cella in alto a dx si ha carve_north = true, questo controllo è necessario
-						randomCell.link(randomCell.getNorth());
+						randomCell.link(grid.getNorth(randomCell));
 				}else{
-					cell.link(cell.getEast());
+					cell.link(grid.getEast(cell));
 				}
 				run.clear();
 			}

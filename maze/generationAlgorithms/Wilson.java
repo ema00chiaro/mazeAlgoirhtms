@@ -25,7 +25,7 @@ public class Wilson{
 			path.add(cell);
 
 			while (unvisited.contains(cell)){
-				cell = cell.getRandomNeighbour();
+				cell = grid.getRandomNeighbour(cell);
 				int position = path.indexOf(cell);
 
 				if (position >= 0){
