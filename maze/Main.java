@@ -16,10 +16,10 @@ class tests{
 		//Grid grid = new Grid(rows, cols, new WeightedCellFactory(20));
 		Grid grid = new Grid(rows, cols, new WeightedCellFactory(20));
 		grid.setDistances(new WeightedDistances());
-		Wilson.buildMaze(grid);
+		Sidewinder.buildMaze(grid);
 		//GrowingTree.buildMaze(grid, list -> Utility.getRandomElement(list));
-		grid.displayGrid();
-		grid.braid();
+		//grid.displayGrid();
+		//grid.braid();
 		Cell start = grid.getCellAt(0, 0);
 		Cell target = grid.getCellAt(rows-1, cols-1);
 
