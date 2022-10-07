@@ -17,8 +17,7 @@ public class Cell{
 	}
 
 	public void link(Cell n, int weight){
-		//NOT bidirectional
-		link(n,weight,false);
+		link(n,weight,true);
 	}
 
 	public void link(Cell n){
