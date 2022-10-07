@@ -10,7 +10,7 @@ public class AldousBorder {
 		int unvisited = grid.size()-1;
 
 		while (unvisited > 0){
-			Cell neighbour = cell.getRandomNeighbour();
+			Cell neighbour = grid.getRandomNeighbour(cell);
 
 			if(!neighbour.hasLinks()){
 				cell.link(neighbour);

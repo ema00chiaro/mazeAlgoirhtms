@@ -11,6 +11,6 @@ public class StandardCellFactory implements CellFactory{
 
 	@Override
 	public Cell createCell(int row, int col) {
-		return new Cell(row, col,1);
+		return new Cell(row, col, 1);
 	}
 }

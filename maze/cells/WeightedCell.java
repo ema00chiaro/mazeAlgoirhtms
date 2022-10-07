@@ -10,11 +10,4 @@ public class WeightedCell extends Cell{
 		super(row, col, weight);
 	}
 
-	@Override
-	public int getWeight() {
-		// TODO Auto-generated method stub
-		return super.getWeight();
-	}
-
-	
 }
