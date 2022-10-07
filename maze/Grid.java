@@ -1,9 +1,7 @@
 package maze;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Function;
@@ -18,7 +16,6 @@ public class Grid implements Iterable<Cell>{
 	protected Cell[][] grid;
 	public static final String ANSI_RESET = "\u001B[0m";
 	public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
-	// private Distances distances;
 
 	public Grid(int rows, int cols, CellFactory cf) {
 		this.rows = rows;
@@ -119,16 +116,6 @@ public class Grid implements Iterable<Cell>{
 		}
 	}
 
-	// public void setDistances(Distances d){
-	// 	this.distances = d;
-	// }
-
-	// // public void displayDistances(Cell start){
-	// // 	Distances dist = distances.distancesFrom(start);
-	// // 	displayGrid(c -> " " + Integer.toString((int)dist.distanceFromRoot(c), 36) + " ");
-	// // }
-
-	//METODI NUOVO PER FARE TUTTO
 	public void displayDistances(Distances distances){
 		Function<Cell, String> f = cell -> {
 			if (distances.contains(cell)){
@@ -140,7 +127,6 @@ public class Grid implements Iterable<Cell>{
 		displayGrid(f);
 	}
 
-	//METODI NUOVO PER FARE TUTTO
 	public void displayColoredDistances(Distances distances){
 		Function<Cell, String> f = cell -> {
 			if (distances.contains(cell)){
@@ -151,30 +137,6 @@ public class Grid implements Iterable<Cell>{
 		};
 		displayGrid(f);
 	}
-	
-	// // public void displayDistanceBetween(Cell start, Cell target){
-	// // 	Distances dist = distances.distancesFrom(start).pathTo(target);
-	// // 	Function<Cell, String> f = cell -> {
-	// // 		if (dist.contains(cell)){
-	// // 			return " " + Integer.toString((int)dist.distanceFromRoot(cell), 36) + " ";
-	// // 		}else{
-	// // 			return "   ";
-	// // 		}
-	// // 	};
-	// // 	displayGrid(f);
-	// // }
-
-	// // public void displayPathBetween(Cell start, Cell target){
-	// // 	Distances dist = distances.distancesFrom(start).pathTo(target);
-	// // 	Function<Cell, String> f = cell -> {
-	// // 		if (dist.contains(cell)){
-	// // 			return ANSI_GREEN_BACKGROUND + "   " + ANSI_RESET;
-	// // 		}else{
-	// // 			return "   ";
-	// // 		}
-	// // 	};
-	// // 	displayGrid(f);
-	// // }
 
 	public Cell[][] getGrid(){
 		return grid;
@@ -211,8 +173,8 @@ public class Grid implements Iterable<Cell>{
 		return new GridIterator();
 	}
 
-	public List<Cell> findDeadends(){
-		List<Cell> deadends = new ArrayList<>();
+	public Set<Cell> findDeadends(){
+		Set<Cell> deadends = new HashSet<>();
 
 		for (Cell cell : this) {
 			if (cell.getLinks().size() == 1)
@@ -221,9 +183,9 @@ public class Grid implements Iterable<Cell>{
 		return deadends;
 	}
 
-	public void braid(){
+	public void braid(int p){
 		for (Cell cell : findDeadends()) {
-			if(cell.getLinks().size() == 1 && Utility.randomBoolean(2)){ //arrivati in un vicolo cieco aggiungiamo un ciclo al 50%
+			if(cell.getLinks().size() == 1 && Utility.randomBoolean(p)){ //arrivati in un vicolo cieco aggiungiamo un ciclo al 50%
 				Set<Cell> neighbours = getNeighbours(cell);
 				neighbours.removeAll(cell.getLinks());
 
