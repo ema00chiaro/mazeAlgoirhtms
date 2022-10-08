@@ -16,6 +16,7 @@ public class Grid implements Iterable<Cell>{
 	protected Cell[][] grid;
 	public static final String ANSI_RESET = "\u001B[0m";
 	public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
+	private Random rand = new Random();
 
 	public Grid(int rows, int cols, CellFactory cf) {
 		this.rows = rows;
@@ -69,8 +70,7 @@ public class Grid implements Iterable<Cell>{
 		return Utility.getRandomElement(getNeighbours(c));
 	}
 
-	public Cell randomCell(){
-		Random rand = new Random();
+	public Cell getRandomCell(){
 		int r = rand.nextInt(rows-1);
 		int c = rand.nextInt(cols-1);
 		return grid[r][c];

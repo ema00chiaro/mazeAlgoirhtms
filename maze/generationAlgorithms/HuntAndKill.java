@@ -9,7 +9,7 @@ import maze.cells.Cell;
 
 public class HuntAndKill {
 	public static void buildMaze(Grid grid){
-		Cell current = grid.randomCell();
+		Cell current = grid.getRandomCell();
 
 		while (!Objects.isNull(current)){
 			List<Cell> unvisitedNeighbours = grid.getNeighbours(current).stream().filter( c -> !c.hasLinks()).toList();

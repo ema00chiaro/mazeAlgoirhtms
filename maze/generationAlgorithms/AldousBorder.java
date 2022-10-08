@@ -6,7 +6,7 @@ import maze.cells.Cell;
 public class AldousBorder {
 
 	public static void buildMaze(Grid grid){
-		Cell cell = grid.randomCell();
+		Cell cell = grid.getRandomCell();
 		int unvisited = grid.size()-1;
 
 		while (unvisited > 0){

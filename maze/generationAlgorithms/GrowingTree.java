@@ -13,12 +13,7 @@ import maze.cells.Cell;
 public class GrowingTree {
 	
 	public static void buildMaze(Grid grid, Function<List<Cell>,Cell> fun){
-		List<Cell> pool = new ArrayList<>();
-		for (Cell cell : grid) {
-			pool.add(cell);
-		}
-
-		Cell start = Utility.getRandomElement(pool);
+		Cell start = grid.getRandomCell();
 
 		Set<Cell> active = new HashSet<>();
 		active.add(start);
