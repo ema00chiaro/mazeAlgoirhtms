@@ -6,14 +6,18 @@ import java.util.Set;
 
 public class Cell{
 	private int row,col;
-	private int weight;
-	private Map<Cell, Integer> links;
+	private double weight;
+	private Map<Cell, Double> links;
 
 	public Cell(int row, int col, int weight) {
 		this.row = row;
 		this.col = col;
 		this.weight = weight;
 		links = new HashMap<>();
+	}
+
+	public Cell(int row, int col){
+		this(row,col,1);
 	}
 
 	public void link(Cell n, int weight){
@@ -28,7 +32,7 @@ public class Cell{
 		link(n,1,bidi);
 	}
 	
-	public void link(Cell n, int weight, boolean bidi){
+	public void link(Cell n, double weight, boolean bidi){
 		links.put(n,weight);
 		if(bidi){
 			n.link(this,weight,false);
@@ -58,11 +62,16 @@ public class Cell{
 		return links.keySet();
 	}
 
-	public Integer getWeightOfLink(Cell cell){
-		return links.get(cell);
+	public double getLinkWeight(Cell linked) {
+		return links.get(linked);
 	}
 
-	public int getWeight() {
+	public void setLinkWeight(Cell linked, double weight) {
+		links.put(linked, weight);
+		linked.links.put(this, weight);
+	}
+
+	public double getWeight() {
 		return weight;
 	}
 
@@ -74,7 +83,7 @@ public class Cell{
 		return links.containsKey(n);
 	}
 
-	public void setWeight(int weight) {
+	public void setWeight(double weight) {
 		this.weight = weight;
 	}
 
