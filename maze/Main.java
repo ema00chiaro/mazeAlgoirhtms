@@ -18,8 +18,8 @@ class tests{
 	}
 
 	private static void prova() {
-		int rows = 5;
-		int cols = 5;
+		int rows = 7;
+		int cols = 7;
 
 		Grid grid = new Grid(rows, cols);
 		// GrowingTree.buildMaze(grid, l -> l.stream().min( (c1,c2) -> {
@@ -37,8 +37,8 @@ class tests{
 		grid.displayGrid();
 		grid.braid(3);
 		grid.displayGrid();
-		// grid.displayDistances(Distances.DijkstraSimplified(start));
-		// grid.displayDistances(Distances.DijkstraSimplified(start).pathTo(target));
+		grid.displayDistances(Distances.DijkstraSimplified(start));
+		grid.displayDistances(Distances.DijkstraSimplified(start).pathTo(target));
 		// Distances.deadEndFilling(grid, start, target);
 		// grid.displayGrid();
 		// grid = new Grid(rows, cols);
@@ -77,18 +77,18 @@ class tests{
 		// g.displayDistances(Distances.SPFA(g.getCellAt(0, 0)));
 	}
 
-	private static void addRandomLinkWeights(Grid grid, int upperbound) {
-		int l = 0;
-		for (Cell cell : grid) {
-			for (Cell link : cell.getLinks()) {
-				if(cell.getLinkWeight(link) == 1){
-					cell.setLinkWeight(link, Utility.getRandomNumber(upperbound)+2);
-					l++;
-				}
-			}
-		}
-		System.out.println(l);
-	}
+	// private static void addRandomLinkWeights(Grid grid, int upperbound) {
+	// 	int l = 0;
+	// 	for (Cell cell : grid) {
+	// 		for (Cell link : cell.getLinks()) {
+	// 			if(cell.getLinkWeight(link) == 1){
+	// 				cell.setLinkWeight(link, Utility.getRandomNumber(upperbound)+2);
+	// 				l++;
+	// 			}
+	// 		}
+	// 	}
+	// 	System.out.println(l);
+	// }
 
 	private static void addRandomCellWeights(Grid grid, int upperbound) {
 		for (Cell cell : grid) {

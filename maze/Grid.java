@@ -9,7 +9,6 @@ import java.util.function.Function;
 
 import maze.cells.Cell;
 import maze.distances.Distances;
-import maze.factories.CellFactory;
 
 public class Grid implements Iterable<Cell>{
 
