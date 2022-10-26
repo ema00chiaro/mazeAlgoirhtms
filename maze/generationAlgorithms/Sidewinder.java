@@ -1,6 +1,7 @@
 package maze.generationAlgorithms;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,12 +12,12 @@ import maze.cells.Cell;
 public class Sidewinder {
 
 	public static void buildMaze(Grid grid){
-		// for (int i = grid.getRows()-1; i >= 0; i--){
-		// 	Cell[] cells = grid.getGrid()[i]; 
-		for (Cell[] cells : grid.getGrid()) {
+		Iterator<Cell[]> rowsIterator = grid.rowsIterator();
+		while (rowsIterator.hasNext()) {
+			Cell[] row = rowsIterator.next();
 			List<Cell> run = new ArrayList<>();
 
-			for (Cell cell : cells) {
+			for (Cell cell : row) {
 				run.add(cell);
 				boolean eastern_limit = (Objects.isNull(grid.getEast(cell)));
 				boolean nothern_limit = (Objects.isNull(grid.getNorth(cell)));
@@ -25,15 +26,13 @@ public class Sidewinder {
 
 				if (carve_north){
 					Cell randomCell = Utility.getRandomElement(run);
-					if (!nothern_limit){ // nel caso della cella in alto a dx si ha carve_north = true, questo controllo è necessario
+					if (!nothern_limit){ // caso in cui ci si trovi nella cella superiore destra
 						randomCell.link(grid.getNorth(randomCell));
 					}
 					run.clear();
 				}else{
 					cell.link(grid.getEast(cell));
 				}
-				
-				//grid.displayGrid();
 			}
 		}
 	}

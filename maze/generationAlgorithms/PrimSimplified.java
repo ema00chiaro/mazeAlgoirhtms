@@ -12,17 +12,13 @@ import maze.cells.Cell;
 public class PrimSimplified {
 
 	public static void buildMaze(Grid grid){
-		List<Cell> pool = new ArrayList<>();
-		for (Cell cell : grid) {
-			pool.add(cell);
-		}
 
-		Cell start = Utility.getRandomElement(pool);
+		Cell start = grid.getRandomCell();
 
-		Set<Cell> active = new HashSet<>();
+		List<Cell> active = new ArrayList<>();
 		active.add(start);
 		while(!active.isEmpty()){
-			Cell cell = Utility.getRandomElement(active.stream().toList());
+			Cell cell = Utility.getRandomElement(active);
 
 			Set<Cell> neighboursPool = grid.getNeighbours(cell);
 			neighboursPool.removeIf( c -> c.hasLinks());

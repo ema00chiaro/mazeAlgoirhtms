@@ -18,6 +18,9 @@ public class CellOld{
 		link(cell, true);
 	}
 
+	/*permette di creare un collegamento fra due celle.
+	il parametro booleano bidi se impostato a "true" permette di creare
+    collegamenti bidirezionali*/
 	public void link(CellOld cell, boolean bidi){
 		links.add(cell);
 		if (bidi)

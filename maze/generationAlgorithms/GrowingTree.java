@@ -1,5 +1,6 @@
 package maze.generationAlgorithms;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,10 +15,10 @@ public class GrowingTree {
 	public static void buildMaze(Grid grid, Function<List<Cell>,Cell> fun){
 		Cell start = grid.getRandomCell();
 
-		Set<Cell> active = new HashSet<>();
+		List<Cell> active = new ArrayList<>();
 		active.add(start);
 		while(!active.isEmpty()){
-			Cell cell = fun.apply(active.stream().toList());
+			Cell cell = fun.apply(active);
 
 			Set<Cell> neighboursPool = grid.getNeighbours(cell);
 			neighboursPool.removeIf( c -> c.hasLinks());

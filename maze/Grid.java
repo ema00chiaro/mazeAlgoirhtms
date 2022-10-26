@@ -2,6 +2,7 @@ package maze;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Function;
@@ -18,17 +19,17 @@ public class Grid implements Iterable<Cell>{
 	public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
 	private Random rand = new Random();
 
-	public Grid(int rows, int cols, CellFactory cf) {
+	public Grid(int rows, int cols) {
 		this.rows = rows;
 		this.cols = cols;
-		grid =cf.createGrid(rows, cols);
-		prepareGrid(cf);
+		grid = new Cell[rows][cols];
+		prepareGrid();
 	}
 
-	public void prepareGrid(CellFactory cf){
+	public void prepareGrid(){
 		for (int i = 0; i < rows; i++){
 			for (int j = 0; j < cols; j++){
-				grid[i][j] = cf.createCell(i, j);
+				grid[i][j] = new Cell(i,j);
 			}
 		}
 	}
@@ -173,6 +174,28 @@ public class Grid implements Iterable<Cell>{
 		return new GridIterator();
 	}
 
+	public Iterator<Cell[]> rowsIterator() {
+		class RowsIterator implements Iterator<Cell[]> {
+
+			private int i = -1;
+		
+			@Override
+			public boolean hasNext() {
+				if (i+1 < rows){
+					i++;
+					return true;
+				}
+				return false;
+			}
+		
+			@Override
+			public Cell[] next() {
+				return grid[i];
+			}
+		}
+		return new RowsIterator();
+	}
+
 	public Set<Cell> findDeadends(){
 		Set<Cell> deadends = new HashSet<>();
 
@@ -183,9 +206,53 @@ public class Grid implements Iterable<Cell>{
 		return deadends;
 	}
 
+	public int findIntersections(){
+		int ret = 0;
+
+		for (Cell cell : this) {
+			if (cell.getLinks().size() > 2)
+				ret ++;
+		}
+		return ret;
+	}
+
+	public int findDirectionChanges(){
+		int ret = 0;
+
+		for (Cell cell : this) {
+			if(!Objects.isNull(getNorth(cell)) && Objects.isNull(getSouth(cell))){
+				if(!Objects.isNull(getEast(cell)) && Objects.isNull(getWest(cell))){
+					ret++;
+				}else if(Objects.isNull(getEast(cell)) && !Objects.isNull(getWest(cell))){
+					ret++;
+				}
+			} else if(!Objects.isNull(getSouth(cell)) && Objects.isNull(getNorth(cell))){
+				if(!Objects.isNull(getEast(cell)) && Objects.isNull(getWest(cell))){
+					ret++;
+				}else if(Objects.isNull(getEast(cell)) && !Objects.isNull(getWest(cell))){
+					ret++;
+				}
+			} else if(!Objects.isNull(getEast(cell)) && Objects.isNull(getWest(cell))){
+				if(!Objects.isNull(getNorth(cell)) && Objects.isNull(getSouth(cell))){
+					ret++;
+				}else if(Objects.isNull(getNorth(cell)) && !Objects.isNull(getSouth(cell))){
+					ret++;
+				}
+			} else if(!Objects.isNull(getWest(cell)) && Objects.isNull(getEast(cell))){
+				if(!Objects.isNull(getNorth(cell)) && Objects.isNull(getSouth(cell))){
+					ret++;
+				}else if(Objects.isNull(getNorth(cell)) && !Objects.isNull(getSouth(cell))){
+					ret++;
+				}
+			}
+		}
+		return ret;
+	}
+
 	public void braid(int p){
 		for (Cell cell : findDeadends()) {
-			if(cell.getLinks().size() == 1 && Utility.randomBoolean(p)){ //arrivati in un vicolo cieco aggiungiamo un ciclo al 50%
+			//arrivati in un vicolo cieco aggiungiamo un ciclo con probabilita' p
+			if(cell.getLinks().size() == 1 && Utility.randomBoolean(p)){ 
 				Set<Cell> neighbours = getNeighbours(cell);
 				neighbours.removeAll(cell.getLinks());
 

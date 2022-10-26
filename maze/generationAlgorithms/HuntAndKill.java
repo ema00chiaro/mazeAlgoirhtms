@@ -1,7 +1,8 @@
 package maze.generationAlgorithms;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import maze.Grid;
 import maze.Utility;
@@ -12,7 +13,7 @@ public class HuntAndKill {
 		Cell current = grid.getRandomCell();
 
 		while (!Objects.isNull(current)){
-			List<Cell> unvisitedNeighbours = grid.getNeighbours(current).stream().filter( c -> !c.hasLinks()).toList();
+			Set<Cell> unvisitedNeighbours = grid.getNeighbours(current).stream().filter( c -> !c.hasLinks()).collect(Collectors.toSet());
 
 			Cell neighbour;
 			if(!unvisitedNeighbours.isEmpty()){
@@ -23,7 +24,7 @@ public class HuntAndKill {
 			}else{
 				current = null;
 				for (Cell cell : grid) {
-					List<Cell> visitedNeighbours = grid.getNeighbours(cell).stream().filter(c -> c.hasLinks()).toList();
+					Set<Cell> visitedNeighbours = grid.getNeighbours(cell).stream().filter(c -> c.hasLinks()).collect(Collectors.toSet());
 					if (!cell.hasLinks() && !visitedNeighbours.isEmpty()){
 						current = cell;
 						neighbour = Utility.getRandomElement(visitedNeighbours);
