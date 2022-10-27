@@ -20,29 +20,29 @@ public class Cell{
 		this(row,col,1);
 	}
 
-	public void link(Cell n){
-		link(n,1,true);
+	public void link(Cell cell){
+		link(cell,1,true);
 	}
 
-	public void link(Cell n, boolean bidi){
-		link(n,1,bidi);
+	public void link(Cell cell, boolean bidi){
+		link(cell,1,bidi);
 	}
 	
-	public void link(Cell n, double weight, boolean bidi){
-		links.put(n,weight);
+	public void link(Cell cell, double weight, boolean bidi){
+		links.put(cell,weight);
 		if(bidi){
-			n.links.put(this, weight);
+			cell.links.put(this, weight);
 		}
 	}
 
-	public void unlink(Cell n){
-		unlink(n,true);
+	public void unlink(Cell cell){
+		unlink(cell,true);
 	}
 
-	public void unlink(Cell n, boolean bidi){
-		links.remove(n);
+	public void unlink(Cell cell, boolean bidi){
+		links.remove(cell);
 		if(bidi){
-			n.links.remove(this);
+			cell.links.remove(this);
 		}
 	}
 
@@ -75,8 +75,8 @@ public class Cell{
 		return !links.isEmpty();
 	}
 
-	public boolean isLinkedTo(Cell n){
-		return links.containsKey(n);
+	public boolean isLinkedTo(Cell cell){
+		return links.containsKey(cell);
 	}
 
 	public void setWeight(double weight) {
