@@ -20,10 +20,6 @@ public class Cell{
 		this(row,col,1);
 	}
 
-	public void link(Cell n, int weight){
-		link(n,weight,true);
-	}
-
 	public void link(Cell n){
 		link(n,1,true);
 	}
@@ -35,7 +31,7 @@ public class Cell{
 	public void link(Cell n, double weight, boolean bidi){
 		links.put(n,weight);
 		if(bidi){
-			n.link(this,weight,false);
+			n.links.put(this, weight);
 		}
 	}
 
@@ -46,7 +42,7 @@ public class Cell{
 	public void unlink(Cell n, boolean bidi){
 		links.remove(n);
 		if(bidi){
-			n.unlink(this, false);
+			n.links.remove(this);
 		}
 	}
 

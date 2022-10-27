@@ -77,18 +77,19 @@ class tests{
 		// g.displayDistances(Distances.SPFA(g.getCellAt(0, 0)));
 	}
 
-	// private static void addRandomLinkWeights(Grid grid, int upperbound) {
-	// 	int l = 0;
-	// 	for (Cell cell : grid) {
-	// 		for (Cell link : cell.getLinks()) {
-	// 			if(cell.getLinkWeight(link) == 1){
-	// 				cell.setLinkWeight(link, Utility.getRandomNumber(upperbound)+2);
-	// 				l++;
-	// 			}
-	// 		}
-	// 	}
-	// 	System.out.println(l);
-	// }
+	private static void addRandomLinkWeights(Grid grid, int upperbound) {
+		int l = 0;
+		for (Cell cell : grid) {
+			for (Cell link : cell.getLinks()) {
+				if(cell.getLinkWeight(link) == 1){
+					int w = Utility.getRandomNumber(upperbound)+2;
+					cell.setLinkWeight(link, w);
+					l++;
+				}
+			}
+		}
+		System.out.println(l);
+	}
 
 	private static void addRandomCellWeights(Grid grid, int upperbound) {
 		for (Cell cell : grid) {
