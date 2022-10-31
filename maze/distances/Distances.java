@@ -1,7 +1,6 @@
 package maze.distances;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -12,11 +11,10 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.function.BiFunction;
 
-import javax.swing.text.Utilities;
-
 import maze.Grid;
 import maze.Utility;
 import maze.cells.Cell;
+import maze.cells.Link;
 
 public class Distances{
 
@@ -37,7 +35,7 @@ public class Distances{
 		while (!frontier.isEmpty()){
 			List<Cell> frontier_new = new ArrayList<>(); 
 			for (Cell cell : frontier) {
-				for (Cell linked : cell.getLinks()) {
+				for (Cell linked : cell.getLinkedCells()) {
 					if (!distances.contains(linked)){
 						distances.setCellDistance(linked, distances.distanceFromRoot(cell) + 1);
 						frontier_new.add(linked);
@@ -59,8 +57,9 @@ public class Distances{
 		pending.add(start);
 		while (!pending.isEmpty()){
 			Cell cell = pending.poll();
-			for (Cell linked : cell.getLinks()) {
-				double totalWeight = distances.distanceFromRoot(cell) + cell.getLinkWeight(linked);
+			for (Link link : cell.getLinks()) {
+				Cell linked = link.opposite(cell);
+				double totalWeight = distances.distanceFromRoot(cell) + link.getWeight();
 				if (!distances.contains(linked) || totalWeight < distances.distanceFromRoot(linked)){
 					distances.setCellDistance(linked, totalWeight);
 					if(!alreadyVisited.contains(linked)){
@@ -85,9 +84,10 @@ public class Distances{
 			pending.remove(cell);
 			settled.add(cell);
 
-			for (Cell linked : cell.getLinks()) {
+			for (Link link : cell.getLinks()) {
+				Cell linked = link.opposite(cell);
 				if(!settled.contains(linked)){
-					double totalWeight = distances.distanceFromRoot(cell) + cell.getLinkWeight(linked);
+					double totalWeight = distances.distanceFromRoot(cell) + link.getWeight();
 					if (!distances.contains(linked) || totalWeight < distances.distanceFromRoot(linked)){
 						distances.setCellDistance(linked, totalWeight);
 						pending.add(linked);
@@ -98,7 +98,7 @@ public class Distances{
 		return distances;
 	}
 
-	private static Distances DijkstraPriority(Cell start, BiFunction<Cell,Cell,Double> computeDistance){
+	private static Distances DijkstraPriority(Cell start, BiFunction<Cell,Link,Double> computeDistance){
 		Distances distances = new Distances(start);
 		Queue<Cell> pending = new PriorityQueue<>((c1,c2) -> Double.compare(distances.distanceFromRoot(c1), distances.distanceFromRoot(c2)));
 		Set<Cell> settled = new HashSet<>();
@@ -109,9 +109,10 @@ public class Distances{
 
 			if(!settled.contains(cell)){
 				settled.add(cell);
-				for (Cell linked : cell.getLinks()) {
+				for (Link link : cell.getLinks()) {
+					Cell linked = link.opposite(cell);
 					if(!settled.contains(linked)){
-						double totalWeight = distances.distanceFromRoot(cell) + computeDistance.apply(cell, linked);
+						double totalWeight = distances.distanceFromRoot(cell) + computeDistance.apply(cell, link);
 						if (!distances.contains(linked) || totalWeight < distances.distanceFromRoot(linked)){
 							distances.setCellDistance(linked, totalWeight);
 							pending.offer(linked);
@@ -124,15 +125,15 @@ public class Distances{
 	}
 	
 	public static Distances DijkstraWeights(Cell start){
-		BiFunction<Cell,Cell,Double> f = (cell, linked) -> {
-			return linked.getWeight();
+		BiFunction<Cell,Link,Double> f = (cell, link) -> {
+			return cell.getWeight();
 		};
 		return DijkstraPriority(start, f);
 	}
 
 	public static Distances DijkstraLinks(Cell start){
-		BiFunction<Cell,Cell,Double> f = (cell, linked) -> {
-			return cell.getLinkWeight(linked);
+		BiFunction<Cell,Link,Double> f = (cell, link) -> {
+			return link.getWeight();
 		};
 		return DijkstraPriority(start, f);
 	}
@@ -147,7 +148,7 @@ public class Distances{
 			if(cell.equals(target)){
 				break;
 			}
-			for (Cell linked : cell.getLinks()) {
+			for (Cell linked : cell.getLinkedCells()) {
 				if(!distances.contains(linked)){
 					distances.setCellDistance(linked, distances.distanceFromRoot(cell)+1);
 					pending.add(linked);
@@ -164,7 +165,7 @@ public class Distances{
 		breadcrumbs.setCellDistance(current, distanceFromRoot(current));
 		
 		while(!current.equals(root)){
-			for (Cell linked : current.getLinks()) {
+			for (Cell linked : current.getLinkedCells()) {
 				if(distanceFromRoot(linked) < distanceFromRoot(current)){
 					breadcrumbs.setCellDistance(linked, distanceFromRoot(linked));
 					current = linked;
@@ -211,6 +212,7 @@ public class Distances{
 	// 		}
 	// 	}
 
+
 	// 	return distances;
 	// }
 
@@ -222,23 +224,16 @@ public class Distances{
 
 		for (Cell cell : deadends) {
 			Cell previous = cell;
-			Cell next = Utility.getRandomElement(previous.getLinks()); //i collegamenti conterranno sempre un singolo elemento
+			Cell next = Utility.getRandomElement(previous.getLinkedCells()); //i collegamenti conterranno sempre un singolo elemento
 			while(next.getLinks().size() <= 2 && !next.equals(start) && !next.equals(target)){
 				next.unlink(previous);
+				
 				previous = next;
-				next = Utility.getRandomElement(previous.getLinks());
+				next = Utility.getRandomElement(previous.getLinkedCells());
 			}
 			next.unlink(previous);
 		}
 
-	}
-
-	private void remove(Collection<Cell> toRemove) {
-		toRemove.stream().forEach( c -> cells.remove(c));
-	}	
-
-	private void remove(Cell toRemove) {
-		cells.remove(toRemove);
 	}
 
 	public double distanceFromRoot(Cell cell){

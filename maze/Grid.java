@@ -253,7 +253,7 @@ public class Grid implements Iterable<Cell>{
 			//arrivati in un vicolo cieco aggiungiamo un ciclo con probabilita' p
 			if(cell.getLinks().size() == 1 && Utility.randomBoolean(p)){ 
 				Set<Cell> neighbours = getNeighbours(cell);
-				neighbours.removeAll(cell.getLinks());
+				neighbours.removeAll(cell.getLinkedCells());
 
 				Set<Cell> best = neighbours;
 				best.removeIf( c -> cell.getLinks().size() != 1);

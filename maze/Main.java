@@ -6,6 +6,7 @@ import java.util.Queue;
 import java.util.Set;
 
 import maze.cells.Cell;
+import maze.cells.Link;
 import maze.distances.Distances;
 import maze.factories.StandardCellFactory;
 import maze.factories.WeightedCellFactory;
@@ -18,8 +19,8 @@ class tests{
 	}
 
 	private static void prova() {
-		int rows = 7;
-		int cols = 7;
+		int rows = 5;
+		int cols = 5;
 
 		Grid grid = new Grid(rows, cols);
 		// GrowingTree.buildMaze(grid, l -> l.stream().min( (c1,c2) -> {
@@ -27,20 +28,23 @@ class tests{
 		// 	Set<Cell> links2 = c2.getLinks();
 		// 	return links1.size()-links2.size();
 		// } ).get());
-		PrimSimplified.buildMaze(grid);
+		RecursiveDivision.buildMaze(grid);
 		//grid.braid(5);
-		//addRandomLinkWeights(grid, 3);
+		addRandomLinkWeights(grid, 6);
 		Cell start = grid.getCellAt(0, 0);
 		Cell target = grid.getCellAt(rows-1, cols-1);
 		
 		// Distances.deadEndFilling(grid, start, target);
 		grid.displayGrid();
 		grid.braid(3);
+		grid.displayDistances(Distances.DijkstraLinks(start));
+		//grid.displayGrid();
+		// grid.displayDistances(Distances.DijkstraSimplified(start));
+		// grid.displayDistances(Distances.DijkstraSimplified(start).pathTo(target));
+		// grid.displayDistances(Distances.DijkstraOriginal(start));
+		// grid.displayDistances(Distances.DijkstraOriginal(start).pathTo(target));
+		Distances.deadEndFilling(grid, start, target);
 		grid.displayGrid();
-		grid.displayDistances(Distances.DijkstraSimplified(start));
-		grid.displayDistances(Distances.DijkstraSimplified(start).pathTo(target));
-		// Distances.deadEndFilling(grid, start, target);
-		// grid.displayGrid();
 		// grid = new Grid(rows, cols);
 		// HuntAndKill.buildMaze(grid);
 		// start = grid.getCellAt(0, 0);
@@ -80,12 +84,8 @@ class tests{
 	private static void addRandomLinkWeights(Grid grid, int upperbound) {
 		int l = 0;
 		for (Cell cell : grid) {
-			for (Cell link : cell.getLinks()) {
-				if(cell.getLinkWeight(link) == 1){
-					int w = Utility.getRandomNumber(upperbound)+2;
-					cell.setLinkWeight(link, w);
-					l++;
-				}
+			for (Link link : cell.getLinks()) {
+				link.setWeight(Utility.getRandomNumber(upperbound)+2);
 			}
 		}
 		System.out.println(l);
