@@ -27,18 +27,20 @@ class tests{
 		// 	Set<Cell> links2 = c2.getLinks();
 		// 	return links1.size()-links2.size();
 		// } ).get());
-		PrimSimplified.buildMaze(grid);
+		RecursiveDivision.buildMaze(grid);
 		//grid.braid(5);
 		//addRandomLinkWeights(grid, 3);
 		Cell start = grid.getCellAt(0, 0);
 		Cell target = grid.getCellAt(rows-1, cols-1);
 		
-		// Distances.deadEndFilling(grid, start, target);
 		grid.displayGrid();
-		grid.braid(3);
+		addRandomLinkWeights(grid, 5);
+		Distances.deadEndFilling(grid, start, target);
 		grid.displayGrid();
-		grid.displayDistances(Distances.DijkstraSimplified(start));
-		grid.displayDistances(Distances.DijkstraSimplified(start).pathTo(target));
+		// grid.braid(3);
+		// grid.displayGrid();
+		// grid.displayDistances(Distances.DijkstraSimplified(start));
+		// grid.displayDistances(Distances.DijkstraSimplified(start).pathTo(target));
 		// Distances.deadEndFilling(grid, start, target);
 		// grid.displayGrid();
 		// grid = new Grid(rows, cols);
@@ -122,8 +124,8 @@ class tests{
 				// twist += g.findDirectionChanges(); // NON FUNZIONA
 				Cell start = g.getRandomCell();
 				//g.displayDistances(Distances.DijkstraSimplified(start));
-				start = Distances.DijkstraSimplified(start).cells.entrySet().stream().max((e1,e2) -> Double.compare(e1.getValue(), e2.getValue())).get().getKey();
-				pathCell += Distances.DijkstraSimplified(start).cells.entrySet().stream().map(e -> e.getValue()).max((n1,n2) -> Double.compare(n1, n2)).get();
+				start = Distances.dijkstraSimplified(start).cells.entrySet().stream().max((e1,e2) -> Double.compare(e1.getValue(), e2.getValue())).get().getKey();
+				pathCell += Distances.dijkstraSimplified(start).cells.entrySet().stream().map(e -> e.getValue()).max((n1,n2) -> Double.compare(n1, n2)).get();
 				//g.displayDistances(Distances.DijkstraSimplified(start));
 		}
 		de = de/times;

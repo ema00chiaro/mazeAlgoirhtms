@@ -21,29 +21,17 @@ public class Cell{
 	}
 
 	public void link(Cell cell){
-		link(cell,1,true);
-	}
-
-	public void link(Cell cell, boolean bidi){
-		link(cell,1,bidi);
+		link(cell,1);
 	}
 	
-	public void link(Cell cell, double weight, boolean bidi){
+	public void link(Cell cell, double weight){
 		links.put(cell,weight);
-		if(bidi){
-			cell.links.put(this, weight);
-		}
+		cell.links.put(this, weight);
 	}
 
 	public void unlink(Cell cell){
-		unlink(cell,true);
-	}
-
-	public void unlink(Cell cell, boolean bidi){
 		links.remove(cell);
-		if(bidi){
-			cell.links.remove(this);
-		}
+		cell.links.remove(this);
 	}
 
 	public int getRow() {

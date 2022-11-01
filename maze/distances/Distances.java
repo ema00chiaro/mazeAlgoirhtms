@@ -29,7 +29,7 @@ public class Distances{
 		cells.put(root, 0.0);
 	}
 
-	public static Distances DijkstraSimplified(Cell start){
+	public static Distances dijkstraSimplified(Cell start){
 		Distances distances = new Distances(start);
 		List<Cell> frontier = new ArrayList<>();
 		frontier.add(start);
@@ -74,7 +74,7 @@ public class Distances{
 	}
 	
 	
-	public static Distances DijkstraOriginal(Cell start){
+	public static Distances dijkstraOriginal(Cell start){
 		Distances distances = new Distances(start);
 		Set<Cell> settled = new HashSet<>();
 		Set<Cell> pending = new HashSet<>();
@@ -98,7 +98,7 @@ public class Distances{
 		return distances;
 	}
 
-	private static Distances DijkstraPriority(Cell start, BiFunction<Cell,Cell,Double> computeDistance){
+	private static Distances dijkstraPriority(Cell start, BiFunction<Cell,Cell,Double> computeDistance){
 		Distances distances = new Distances(start);
 		Queue<Cell> pending = new PriorityQueue<>((c1,c2) -> Double.compare(distances.distanceFromRoot(c1), distances.distanceFromRoot(c2)));
 		Set<Cell> settled = new HashSet<>();
@@ -123,18 +123,18 @@ public class Distances{
 		return distances;
 	}
 	
-	public static Distances DijkstraWeights(Cell start){
+	public static Distances dijkstraWeights(Cell start){
 		BiFunction<Cell,Cell,Double> f = (cell, linked) -> {
 			return linked.getWeight();
 		};
-		return DijkstraPriority(start, f);
+		return dijkstraPriority(start, f);
 	}
 
-	public static Distances DijkstraLinks(Cell start){
+	public static Distances dijkstraLinks(Cell start){
 		BiFunction<Cell,Cell,Double> f = (cell, linked) -> {
 			return cell.getLinkWeight(linked);
 		};
-		return DijkstraPriority(start, f);
+		return dijkstraPriority(start, f);
 	}
 	
 	public static Distances BFS(Cell start, Cell target){
@@ -233,13 +233,13 @@ public class Distances{
 
 	}
 
-	private void remove(Collection<Cell> toRemove) {
-		toRemove.stream().forEach( c -> cells.remove(c));
-	}	
+	// private void remove(Collection<Cell> toRemove) {
+	// 	toRemove.stream().forEach( c -> cells.remove(c));
+	// }	
 
-	private void remove(Cell toRemove) {
-		cells.remove(toRemove);
-	}
+	// private void remove(Cell toRemove) {
+	// 	cells.remove(toRemove);
+	// }
 
 	public double distanceFromRoot(Cell cell){
 		return cells.get(cell);

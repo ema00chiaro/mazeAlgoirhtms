@@ -9,7 +9,7 @@ public class RecursiveDivision {
 	public static void buildMaze(Grid grid){
 		for (Cell cell : grid) {//si potrebbe non iterare su tutte le celle dato che il metodo link effettua un link reciproco
 			for (Cell neighbour : grid.getNeighbours(cell)) {
-				cell.link(neighbour,false);
+				cell.link(neighbour);
 			}
 		}
 

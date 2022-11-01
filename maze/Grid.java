@@ -16,7 +16,6 @@ public class Grid implements Iterable<Cell>{
 	protected Cell[][] grid;
 	public static final String ANSI_RESET = "\u001B[0m";
 	public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
-	private Random rand = new Random();
 
 	public Grid(int rows, int cols) {
 		this.rows = rows;
@@ -25,7 +24,7 @@ public class Grid implements Iterable<Cell>{
 		prepareGrid();
 	}
 
-	public void prepareGrid(){
+	private void prepareGrid(){
 		for (int i = 0; i < rows; i++){
 			for (int j = 0; j < cols; j++){
 				grid[i][j] = new Cell(i,j);
@@ -52,8 +51,7 @@ public class Grid implements Iterable<Cell>{
 	public Cell getCellAt(int i, int j) {
 		if ((i >= 0 && i <= rows-1) && (j >= 0 && j <= cols-1))
 			return grid[i][j];
-		else
-			return null;
+		return null;
 	}
 
 	public Set<Cell> getNeighbours(Cell c){
@@ -71,8 +69,8 @@ public class Grid implements Iterable<Cell>{
 	}
 
 	public Cell getRandomCell(){
-		int r = rand.nextInt(rows-1);
-		int c = rand.nextInt(cols-1);
+		int r = Utility.getRandomNumber(rows);
+		int c = Utility.getRandomNumber(cols);
 		return grid[r][c];
 	}
 
