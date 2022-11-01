@@ -36,7 +36,7 @@ class tests{
 		
 		// Distances.deadEndFilling(grid, start, target);
 		grid.displayGrid();
-		grid.braid(3);
+		// grid.braid(3);
 		grid.displayDistances(Distances.DijkstraLinks(start));
 		//grid.displayGrid();
 		// grid.displayDistances(Distances.DijkstraSimplified(start));

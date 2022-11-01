@@ -80,7 +80,6 @@ public class Grid implements Iterable<Cell>{
 		return rows*cols;
 	}
 
-
 	public int getRows() {
 		return rows;
 	}
