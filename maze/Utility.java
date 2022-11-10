@@ -1,6 +1,5 @@
 package maze;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
 
@@ -8,7 +7,10 @@ public class Utility {
 	private static Random rand = new Random();
 
 	public static <T> T getRandomElement(Collection<T> c){
-		return new ArrayList<>(c).get(rand.nextInt(c.size()));
+		return c.stream()
+				.skip(getRandomNumber(c.size()))
+				.findFirst()
+				.get();
 	}
 
 	//questa funzione ritorna true con probabilità 1/p

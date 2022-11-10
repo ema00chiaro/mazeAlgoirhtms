@@ -11,9 +11,9 @@ import maze.cells.Cell;
 public class HuntAndKill {
 	public static void buildMaze(Grid grid){
 		Cell current = grid.getRandomCell();
-
 		while (!Objects.isNull(current)){
-			Set<Cell> unvisitedNeighbours = grid.getNeighbours(current).stream().filter( c -> !c.hasLinks()).collect(Collectors.toSet());
+			Set<Cell> unvisitedNeighbours = grid.getNeighbours(current);
+			unvisitedNeighbours.removeIf(c -> c.hasLinks());
 
 			Cell neighbour;
 			if(!unvisitedNeighbours.isEmpty()){
@@ -24,16 +24,18 @@ public class HuntAndKill {
 			}else{
 				current = null;
 				for (Cell cell : grid) {
-					Set<Cell> visitedNeighbours = grid.getNeighbours(cell).stream().filter(c -> c.hasLinks()).collect(Collectors.toSet());
-					if (!cell.hasLinks() && !visitedNeighbours.isEmpty()){
-						current = cell;
-						neighbour = Utility.getRandomElement(visitedNeighbours);
-						current.link(neighbour);
-						break;
+					if(!cell.hasLinks()){
+						Set<Cell> visitedNeighbours = grid.getNeighbours(cell);
+						visitedNeighbours.removeIf(c -> !c.hasLinks());
+						if (!visitedNeighbours.isEmpty()){
+							current = cell;
+							neighbour = Utility.getRandomElement(visitedNeighbours);
+							current.link(neighbour);
+							break;
+						}
 					}
 				}
 			}
 		}
-
 	}
 }

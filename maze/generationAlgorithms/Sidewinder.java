@@ -29,7 +29,7 @@ public class Sidewinder {
 					if (!nothern_limit){ // caso in cui ci si trovi nella cella superiore destra
 						randomCell.link(grid.getNorth(randomCell));
 					}
-					run.clear();
+					run = new ArrayList<>();
 				}else{
 					cell.link(grid.getEast(cell));
 				}

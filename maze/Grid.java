@@ -3,7 +3,6 @@ package maze;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Objects;
-import java.util.Random;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -217,33 +216,36 @@ public class Grid implements Iterable<Cell>{
 		int ret = 0;
 
 		for (Cell cell : this) {
-			if(!Objects.isNull(getNorth(cell)) && Objects.isNull(getSouth(cell))){
-				if(!Objects.isNull(getEast(cell)) && Objects.isNull(getWest(cell))){
-					ret++;
-				}else if(Objects.isNull(getEast(cell)) && !Objects.isNull(getWest(cell))){
-					ret++;
-				}
-			} else if(!Objects.isNull(getSouth(cell)) && Objects.isNull(getNorth(cell))){
-				if(!Objects.isNull(getEast(cell)) && Objects.isNull(getWest(cell))){
-					ret++;
-				}else if(Objects.isNull(getEast(cell)) && !Objects.isNull(getWest(cell))){
-					ret++;
-				}
-			} else if(!Objects.isNull(getEast(cell)) && Objects.isNull(getWest(cell))){
-				if(!Objects.isNull(getNorth(cell)) && Objects.isNull(getSouth(cell))){
-					ret++;
-				}else if(Objects.isNull(getNorth(cell)) && !Objects.isNull(getSouth(cell))){
-					ret++;
-				}
-			} else if(!Objects.isNull(getWest(cell)) && Objects.isNull(getEast(cell))){
-				if(!Objects.isNull(getNorth(cell)) && Objects.isNull(getSouth(cell))){
-					ret++;
-				}else if(Objects.isNull(getNorth(cell)) && !Objects.isNull(getSouth(cell))){
-					ret++;
-				}
-			}
+			ret += changes(cell);
 		}
 		return ret;
+	}
+
+	private int changes(Cell cell) {
+		if(cell.isLinkedTo(getNorth(cell)) && !cell.isLinkedTo(getSouth(cell))){
+			if(cell.isLinkedTo(getEast(cell)) ^ cell.isLinkedTo(getWest(cell))){
+				return 1;
+			}
+		}
+
+		if(cell.isLinkedTo(getSouth(cell)) && !cell.isLinkedTo(getNorth(cell))){
+			if(cell.isLinkedTo(getEast(cell)) ^ cell.isLinkedTo(getWest(cell))){
+				return 1;
+			}
+		}
+
+		if(cell.isLinkedTo(getEast(cell)) && !cell.isLinkedTo(getWest(cell))){
+			if(cell.isLinkedTo(getNorth(cell)) ^ cell.isLinkedTo(getSouth(cell))){
+				return 1;
+			}
+		}
+
+		if(cell.isLinkedTo(getWest(cell)) && !cell.isLinkedTo(getEast(cell))){
+			if(cell.isLinkedTo(getNorth(cell)) ^ cell.isLinkedTo(getSouth(cell))){
+				return 1;
+			}
+		}
+		return 0;
 	}
 
 	public void braid(int p){
